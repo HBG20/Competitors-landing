@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>xNova — La Plataforma de Exportación</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f7f8fa;
+    --surface2: #eef0f4;
+    --accent: #0074ff;
+    --accent-hover: #005ecc;
+    --navy: #0D1B2A;
+    --text: #0D1B2A;
+    --text-light: #4a5568;
+    --muted: #8492a6;
+    --border: #e2e8f0;
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 60px; height: 72px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo img { height: 32px; display: block; }
+
+  .lang-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-light);
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+
+  .lang-switcher select {
+    appearance: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 34px 8px 14px;
+    background: #fff;
+    color: var(--text);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L2 4h8L6 8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  .lang-switcher select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    padding: 140px 60px 100px;
+    background: #fff;
+    position: relative; overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,116,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 24px;
+    animation: fadeUp .5s ease both;
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+    font-weight: 700; line-height: 1.08; letter-spacing: -0.03em;
+    color: var(--navy); max-width: 860px; margin-bottom: 24px;
+    animation: fadeUp .55s .1s ease both;
+  }
+
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.15rem; color: var(--text-light);
+    max-width: 580px; line-height: 1.7; margin-bottom: 44px;
+    animation: fadeUp .55s .2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 14px; justify-content: center;
+    animation: fadeUp .55s .3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 14px 30px; border-radius: 100px;
+    font-weight: 600; font-size: 1rem; text-decoration: none;
+    transition: background .2s, transform .15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent; color: var(--text);
+    padding: 14px 30px; border-radius: 100px;
+    border: 1.5px solid var(--border);
+    font-weight: 500; font-size: 1rem; text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 64px; margin-top: 80px;
+    padding-top: 48px; border-top: 1px solid var(--border);
+    animation: fadeUp .55s .4s ease both;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-size: 2.4rem; font-weight: 700; color: var(--navy);
+    line-height: 1; letter-spacing: -0.03em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── LAYOUT ── */
+  .full-section { padding: 96px 60px; }
+  .full-section .inner { max-width: 1200px; margin: 0 auto; }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .eyebrow {
+    font-size: .72rem; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px; display: block;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700; letter-spacing: -0.025em; line-height: 1.15;
+    color: var(--navy); margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 1.05rem; color: var(--text-light);
+    max-width: 520px; line-height: 1.7; margin-bottom: 56px;
+  }
+
+  /* ── FEATURES ── */
+  #features { background: var(--surface); }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+
+  .feature-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px 24px;
+    transition: box-shadow .25s, transform .25s, border-color .25s;
+  }
+  .feature-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    transform: translateY(-4px);
+    border-color: rgba(0,116,255,0.25);
+  }
+
+  .feature-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    background: rgba(0,116,255,0.08);
+  }
+  .feature-icon .material-icons-round {
+    font-size: 24px; color: var(--accent);
+  }
+
+  .feature-card h3 { font-size: .95rem; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .feature-card p  { font-size: .88rem; color: var(--text-light); line-height: 1.6; }
+
+  /* ── COMPARE ── */
+  #compare { background: #fff; }
+
+  .competitor-selector {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 48px; flex-wrap: wrap;
+  }
+
+  .selector-label { color: var(--muted); font-size: .9rem; margin-right: 6px; font-weight: 500; }
+
+  .comp-btn {
+    background: var(--surface); border: 1.5px solid var(--border);
+    color: var(--text-light); padding: 8px 20px; border-radius: 100px;
+    font-size: .88rem; cursor: pointer; transition: all .2s;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+  }
+  .comp-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .comp-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .compare-card {
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .compare-card.xnova {
+    background: #fff; border-color: var(--accent);
+    box-shadow: 0 4px 24px rgba(0,116,255,0.12);
+  }
+
+  .compare-card-header {
+    padding: 22px 28px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .compare-card.xnova .compare-card-header { background: rgba(0,116,255,0.04); }
+
+  .compare-brand { font-size: 1.15rem; font-weight: 700; color: var(--navy); }
+  .compare-card.xnova .compare-brand { color: var(--accent); }
+
+  .badge-winner {
+    background: var(--accent); color: #fff;
+    font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+    padding: 4px 12px; border-radius: 100px; text-transform: uppercase;
+  }
+
+  .compare-list { padding: 20px 28px; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .compare-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; line-height: 1.5; }
+  .compare-list li.positive { color: var(--text); }
+  .compare-list li.negative { color: var(--muted); }
+  .icon-check { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+  .icon-cross  { color: #cbd5e0;      flex-shrink: 0; margin-top: 1px; }
+
+  /* ── UX SLIDER ── */
+  #ux-slider { background: var(--surface); text-align: center; }
+  #ux-slider .inner { max-width: 1200px; margin: 0 auto; }
+
+  .slider-wrapper {
+    position: relative; width: 100%; max-width: 900px; margin: 0 auto;
+    border-radius: var(--radius-lg); overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    cursor: col-resize; user-select: none; height: 420px;
+  }
+
+  .slider-base, .slider-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .slider-base    { background: #eef0f6; }
+  .slider-overlay { background: #eef5ff; clip-path: inset(0 50% 0 0); }
+
+  .slider-divider {
+    position: absolute; top: 0; bottom: 0; width: 2px;
+    background: var(--accent); left: 50%; transform: translateX(-50%);
+    pointer-events: none; z-index: 5;
+  }
+  .slider-handle {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .85rem; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,116,255,0.35);
+    z-index: 6; pointer-events: none;
+  }
+
+  .slider-label {
+    position: absolute; top: 20px;
+    background: rgba(255,255,255,0.95); border: 1px solid var(--border);
+    padding: 5px 14px; border-radius: 100px;
+    font-size: .8rem; font-weight: 600; color: var(--text-light);
+    pointer-events: none;
+  }
+  .slider-label.left  { left: 20px; }
+  .slider-label.right { right: 20px; color: var(--accent); border-color: rgba(255,90,0,0.3); }
+
+  .screen-mockup {
+    width: 78%; max-width: 560px; border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    background: #fff;
+  }
+  .screen-bar {
+    height: 30px; display: flex; align-items: center; gap: 6px;
+    padding: 0 14px; background: #f1f3f5;
+  }
+  .screen-bar span { width: 8px; height: 8px; border-radius: 50%; }
+  .screen-bar span:nth-child(1) { background: #ff5f57; }
+  .screen-bar span:nth-child(2) { background: #febc2e; }
+  .screen-bar span:nth-child(3) { background: #28c840; }
+
+  .screen-body  { padding: 20px; background: #fff; }
+  .screen-row   { height: 10px; border-radius: 5px; margin-bottom: 9px; background: #e9ecef; }
+  .screen-row.w80 { width: 80%; } .screen-row.w60 { width: 60%; } .screen-row.w90 { width: 90%; }
+  .screen-row.accent { background: rgba(0,116,255,0.2); width: 45%; }
+  .screen-cols  { display: flex; gap: 8px; margin-top: 14px; }
+  .screen-col   { flex: 1; height: 50px; border-radius: 8px; background: #f1f3f5; }
+  .screen-col.highlight { background: rgba(0,116,255,0.1); border: 1px solid rgba(0,116,255,0.2); }
+
+  .comp-screen .screen-body { background: #f5f7fa; }
+  .comp-row { height: 10px; border-radius: 2px; margin-bottom: 9px; background: #d5dae3; }
+  .comp-row.w80 { width: 80%; } .comp-row.w60 { width: 60%; }
+  .comp-cols { display: flex; gap: 8px; margin-top: 14px; }
+  .comp-col  { flex: 1; height: 50px; border-radius: 4px; background: #e4e7ec; }
+
+  /* ── WHY US ── */
+  #why-us { background: #fff; }
+
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+
+  .why-list { display: flex; flex-direction: column; gap: 16px; margin-top: 36px; }
+
+  .why-item {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 22px 20px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .why-item:hover { border-color: rgba(0,116,255,0.3); box-shadow: 0 4px 20px rgba(0,116,255,0.07); }
+
+  .why-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); opacity: .45; line-height: 1; flex-shrink: 0; min-width: 32px; }
+  .why-item h4 { font-size: .95rem; font-weight: 600; color: var(--navy); margin-bottom: 5px; }
+  .why-item p  { font-size: .88rem; color: var(--text-light); line-height: 1.6; }
+
+  .why-visual {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 36px; position: relative; overflow: hidden;
+  }
+  .why-visual::after {
+    content: ''; position: absolute; bottom: -80px; right: -80px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(0,116,255,0.07), transparent 70%);
+    pointer-events: none;
+  }
+
+  .metric-block { margin-bottom: 22px; }
+  .metric-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .metric-name { font-size: .82rem; font-weight: 500; color: var(--text-light); }
+  .metric-val  { font-size: .82rem; font-weight: 700; color: var(--accent); }
+  .metric-track { background: var(--surface2); border-radius: 100px; height: 7px; }
+  .metric-fill  { height: 7px; border-radius: 100px; margin-bottom: 5px; }
+  .metric-fill.xnova { background: var(--accent); }
+  .metric-fill.comp  { background: #cbd5e0; }
+  .metric-labels-row { display: flex; justify-content: space-between; font-size: .75rem; color: var(--muted); margin-top: 4px; }
+
+  /* ── FEATURE TABLE ── */
+  #feature-table { background: var(--surface); }
+
+  .table-wrap {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--navy); }
+  thead th {
+    padding: 16px 24px; text-align: left;
+    font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+    color: rgba(255,255,255,0.6); text-transform: uppercase;
+  }
+  thead th:first-child { width: 28%; color: #fff; }
+  thead th.xnova-col   { color: #7eb8ff; }
+
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #fafbfc; }
+
+  tbody td { padding: 14px 24px; font-size: .9rem; color: var(--text-light); }
+  tbody td:first-child { color: var(--navy); font-weight: 500; }
+
+  .check   { color: var(--accent); font-weight: 600; font-size: .9rem; }
+  .cross   { color: #cbd5e0; font-size: .95rem; }
+  .partial { color: #d97706; font-size: .82rem; font-weight: 600; background: #fffbeb; padding: 2px 8px; border-radius: 4px; }
+
+  /* ── CTA FOOTER ── */
+  #cta-footer {
+    background: var(--navy); padding: 100px 60px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  #cta-footer::before {
+    content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 500px;
+    background: radial-gradient(ellipse, rgba(0,116,255,0.14), transparent 70%);
+    pointer-events: none;
+  }
+  #cta-footer .inner { max-width: 640px; margin: 0 auto; position: relative; }
+  #cta-footer h2  { color: #fff; font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-bottom: 16px; }
+  #cta-footer p   { color: rgba(255,255,255,0.55); font-size: 1.05rem; margin-bottom: 44px; line-height: 1.7; }
+  #cta-footer .eyebrow { color: rgba(80,160,255,.9); }
+  .btn-outline-white {
+    background: transparent; color: rgba(255,255,255,0.85);
+    padding: 14px 30px; border-radius: 100px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    font-weight: 500; font-size: 1rem; text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline-white:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
+  footer {
+    background: var(--navy); padding: 24px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.35); font-size: .82rem;
+  }
+  footer img { height: 24px; opacity: .6; display: block; }
+  footer a   { color: rgba(255,255,255,0.35); text-decoration: none; }
+  footer a:hover { color: rgba(255,255,255,0.65); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    nav { padding: 0 24px; }
+    nav ul { display: none; }
+    .full-section, #cta-footer, footer { padding-left: 24px; padding-right: 24px; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .compare-grid, .why-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; flex-wrap: wrap; justify-content: center; }
+  }
+  @media (max-width: 540px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    h1 { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="https://cdn.prod.website-files.com/64dc839c17a54b1d728a0268/6509bd28d4868a5d4120c9f0_LOGO.png" alt="xNova International">
+  </div>
+  <label class="lang-switcher" for="langSwitcher">
+    <span id="langLabel">Idioma</span>
+    <select id="langSwitcher" aria-label="Seleccionar idioma">
+      <option value="es">ES</option>
+      <option value="it">IT</option>
+      <option value="en">EN</option>
+    </select>
+  </label>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <span class="hero-eyebrow">100% de los datos de comercio internacional</span>
+  <h1>La plataforma líder de<br>inteligencia de mercado<br>para <em>exportadores</em></h1>
+  <p class="hero-sub">Con xNova el equipo de exportación obtiene en una única plataforma toda la información necesaria para vender en cualquier mercado.</p>
+  <div class="hero-ctas">
+    <a href="https://www.xnovainternational.com/es/demo" class="btn-primary">
+      Reserva tu demo →
+    </a>
+    <a href="#compare" class="btn-outline">Ver comparativa</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">180<span>+</span></div>
+      <div class="stat-label">Países cubiertos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">22<span>%</span></div>
+      <div class="stat-label">Aumento medio de clientes</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">36<span>%</span></div>
+      <div class="stat-label">Más ingresos por cliente</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">500<span>+</span></div>
+      <div class="stat-label">Empresas exportadoras</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FEATURES -->
+<div id="features" class="full-section">
+  <div class="inner">
+    <span class="eyebrow">Funcionalidades de la plataforma</span>
+    <h2>Todo lo que necesita tu<br>departamento de exportación</h2>
+    <p class="section-desc">Desde la prospección hasta el cierre, xNova cubre todo el ciclo exportador en una única plataforma integrada.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-icons-round">public</span></div>
+        <h3>Cobertura de mercados global</h3>
+        <p>Accede a 180+ mercados con datos regulatorios en tiempo real y normativas locales integradas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-icons-round">search</span></div>
+        <h3>Buscador de importadores</h3>
+        <p>Encuentra todos los importadores de tu producto en cada mercado con su historial de compras completo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-icons-round">bar_chart</span></div>
+        <h3>Inteligencia competitiva</h3>
+        <p>Descubre lo que exporta tu competencia: a quién vende, con qué frecuencia y en qué volumen.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-icons-round">contact_phone</span></div>
+        <h3>Datos de contacto</h3>
+        <p>Obtén nombre, email y teléfono del responsable de compras sin salir de la plataforma.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- UX SLIDER -->
+<div id="ux-slider" class="full-section" style="background:var(--surface);">
+  <div class="inner" style="text-align:center;">
+    <span class="eyebrow">Experiencia de usuario</span>
+    <h2>Diseñado para equipos exportadores,<br>no para desarrolladores</h2>
+    <p class="section-desc" style="margin:0 auto 48px;">Arrastra el control para comparar la interfaz de xNova con la de un competidor típico.</p>
+
+    <div class="slider-wrapper" id="sliderWrapper">
+      <div class="slider-base">
+        <div class="screen-mockup comp-screen">
+          <div class="screen-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body" style="background:#f5f7fa;">
+            <div class="comp-row w80"></div>
+            <div class="comp-row w60"></div>
+            <div class="comp-row w80"></div>
+            <div class="comp-cols">
+              <div class="comp-col"></div><div class="comp-col"></div><div class="comp-col"></div>
+            </div>
+            <div class="comp-row w60" style="margin-top:14px;"></div>
+            <div class="comp-row w80"></div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-overlay" id="sliderOverlay">
+        <div class="screen-mockup">
+          <div class="screen-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="screen-row accent"></div>
+            <div class="screen-row w90"></div>
+            <div class="screen-row w80"></div>
+            <div class="screen-cols">
+              <div class="screen-col highlight"></div>
+              <div class="screen-col highlight"></div>
+              <div class="screen-col"></div>
+            </div>
+            <div class="screen-row w60" style="margin-top:12px;"></div>
+            <div class="screen-row w80"></div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-divider" id="sliderDivider"></div>
+      <div class="slider-handle" id="sliderHandle">⇔</div>
+      <div class="slider-label left">Competidor</div>
+      <div class="slider-label right">xNova</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- COMPARE -->
+<div id="compare" class="full-section">
+  <div class="inner">
+    <span class="eyebrow">Comparativa de competidores</span>
+    <h2>xNova vs la competencia</h2>
+    <p class="section-desc">Selecciona un competidor para ver una comparación detallada de capacidades.</p>
+
+    <div class="competitor-selector">
+      <span class="selector-label">Comparar con:</span>
+      <button class="comp-btn active" data-key="flexport" onclick="selectComp(this,'flexport')">Flexport</button>
+      <button class="comp-btn" data-key="expeditors" onclick="selectComp(this,'expeditors')">Expeditors</button>
+      <button class="comp-btn" data-key="amber" onclick="selectComp(this,'amber')">Amber Road</button>
+      <button class="comp-btn" data-key="sap" onclick="selectComp(this,'sap')">SAP GTS</button>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card xnova">
+        <div class="compare-card-header">
+          <span class="compare-brand">xNova</span>
+          <span class="badge-winner">✦ Recomendado</span>
+        </div>
+        <ul class="compare-list">
+          <li class="positive"><span class="icon-check">✦</span> Gestión completa del ciclo exportador en una sola plataforma</li>
+          <li class="positive"><span class="icon-check">✦</span> Cobertura de 180+ países, la más amplia del sector</li>
+          <li class="positive"><span class="icon-check">✦</span> Datos de facturación y contacto para que no necesites más plataformas de datos</li>
+          <li class="positive"><span class="icon-check">✦</span> Plataforma exclusiva para departamentos de exportación</li>
+          <li class="positive"><span class="icon-check">✦</span> Implementación en menos de 2 meses gracias a nuestro equipo dedicado</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <div class="compare-card-header">
+          <span class="compare-brand" id="comp-name">Flexport</span>
+        </div>
+        <ul class="compare-list" id="comp-list">
+          <li class="positive"><span class="icon-check">✓</span> Sólida red de freight forwarding</li>
+          <li class="negative"><span class="icon-cross">✕</span> Sin módulo de departamento de exportación</li>
+          <li class="negative"><span class="icon-cross">✕</span> Automatización de cumplimiento muy limitada</li>
+          <li class="negative"><span class="icon-cross">✕</span> Sin clasificación IA de códigos HS</li>
+          <li class="positive"><span class="icon-check">✓</span> Seguimiento de envíos en tiempo real</li>
+          <li class="negative"><span class="icon-cross">✕</span> Requiere integraciones de terceros para ERP</li>
+          <li class="negative"><span class="icon-cross">✕</span> Enfocado en logística, no en exportación integral</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<hr class="section-divider">
+
+<!-- WHY US -->
+<div id="why-us" class="full-section">
+  <div class="inner">
+    <div class="why-grid">
+      <div>
+        <span class="eyebrow">Por qué las empresas eligen xNova</span>
+        <h2>La plataforma en la que<br>confían los exportadores</h2>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-num">01</div>
+            <div>
+              <h4>Mayor cobertura de mercado del sector</h4>
+              <p>xNova cubre más de 180 países con datos regulatorios siempre actualizados — más que cualquier competidor.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">02</div>
+            <div>
+              <h4>Construida exclusivamente para exportación</h4>
+              <p>A diferencia de las plataformas logísticas que añaden exportación como accesorio, xNova nació para los departamentos de exportación.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">03</div>
+            <div>
+              <h4>El tiempo de implantación más rápido</h4>
+              <p>Nuestros clientes están operativos en menos de 2 semanas con onboarding personalizado y migración ERP incluida.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="why-visual">
+          <span class="eyebrow" style="margin-bottom:24px;">Métricas de rendimiento</span>
+          <div class="metric-block">
+            <div class="metric-header"><span class="metric-name">Cobertura de mercado</span><span class="metric-val">180+ países</span></div>
+            <div class="metric-track"><div class="metric-fill xnova" style="width:92%"></div></div>
+            <div class="metric-labels-row"><span>xNova</span><span>92%</span></div>
+          </div>
+          <div class="metric-block">
+            <div class="metric-header"><span class="metric-name">Media de competidores</span><span class="metric-val">~98 países</span></div>
+            <div class="metric-track"><div class="metric-fill comp" style="width:54%"></div></div>
+            <div class="metric-labels-row"><span>Competidores</span><span>54%</span></div>
+          </div>
+          <div class="metric-block">
+            <div class="metric-header"><span class="metric-name">Automatización de cumplimiento</span><span class="metric-val">Completa</span></div>
+            <div class="metric-track"><div class="metric-fill xnova" style="width:88%"></div></div>
+            <div class="metric-labels-row"><span>xNova</span><span>88%</span></div>
+          </div>
+          <div class="metric-block">
+            <div class="metric-header"><span class="metric-name">Tiempo de implantación</span><span class="metric-val">95% más rápido</span></div>
+            <div class="metric-track"><div class="metric-fill xnova" style="width:95%"></div></div>
+            <div class="metric-labels-row"><span>xNova — &lt;2 semanas</span><span>vs 3–6 meses</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- FEATURE TABLE -->
+<div id="feature-table" class="full-section">
+  <div class="inner">
+    <span class="eyebrow">Tabla comparativa completa</span>
+    <h2>Comparativa funcional detallada</h2>
+    <p class="section-desc">Comprueba exactamente cómo se posiciona xNova frente a los principales competidores del mercado.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Funcionalidad</th>
+            <th class="xnova-col">xNova</th>
+            <th>Flexport</th>
+            <th>Expeditors</th>
+            <th>SAP GTS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Módulo de dpto. de exportación</td><td><span class="check">✦ Sí</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="partial">Parcial</span></td></tr>
+          <tr><td>Cobertura de mercado</td><td><span class="check">180+ países</span></td><td><span class="partial">120+ países</span></td><td><span class="partial">90+ países</span></td><td><span class="partial">140+ países</span></td></tr>
+          <tr><td>Clasificación HS con IA</td><td><span class="check">✦ Sí</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="partial">Básico</span></td></tr>
+          <tr><td>Integración ERP nativa</td><td><span class="check">✦ Sí</span></td><td><span class="partial">Solo API</span></td><td><span class="cross">✕</span></td><td><span class="check">✦ Sí</span></td></tr>
+          <tr><td>Cumplimiento en tiempo real</td><td><span class="check">✦ Sí</span></td><td><span class="cross">✕</span></td><td><span class="partial">Parcial</span></td><td><span class="check">✦ Sí</span></td></tr>
+          <tr><td>Documentación automatizada</td><td><span class="check">✦ Sí</span></td><td><span class="partial">Parcial</span></td><td><span class="partial">Parcial</span></td><td><span class="check">✦ Sí</span></td></tr>
+          <tr><td>Screening de sanciones</td><td><span class="check">✦ Sí</span></td><td><span class="cross">✕</span></td><td><span class="partial">Add-on</span></td><td><span class="check">✦ Sí</span></td></tr>
+          <tr><td>Tiempo de implantación</td><td><span class="check">&lt; 2 semanas</span></td><td><span class="partial">4–6 semanas</span></td><td><span class="partial">6–12 semanas</span></td><td><span class="cross">3–6 meses</span></td></tr>
+          <tr><td>Soporte dedicado exportación</td><td><span class="check">✦ Sí</span></td><td><span class="partial">General</span></td><td><span class="partial">General</span></td><td><span class="cross">✕</span></td></tr>
+          <tr><td>Dashboard de analytics</td><td><span class="check">✦ Sí</span></td><td><span class="partial">Básico</span></td><td><span class="cross">✕</span></td><td><span class="partial">Básico</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FOOTER -->
+<div id="cta-footer">
+  <div class="inner">
+    <span class="eyebrow">¿Listo para dar el salto?</span>
+    <h2>La única plataforma que<br>tu equipo exportador necesita</h2>
+    <p>Únete a más de 500 empresas exportadoras que eligieron xNova por su mayor cobertura de mercado, cumplimiento automatizado y operaciones más ágiles.</p>
+    <div class="hero-ctas" style="justify-content:center;">
+      <a href="https://www.xnovainternational.com/es/demo" class="btn-primary">Reserva tu demo →</a>
+      <a href="https://www.xnovainternational.com/es/contact" class="btn-outline-white">Hablar con ventas</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <img src="https://cdn.prod.website-files.com/64dc839c17a54b1d728a0268/64dc839c17a54b1d728a0403_LOGO%20blanco.png" alt="xNova">
+  <span>© 2025 xNova International. Todos los derechos reservados.</span>
+  <span>
+    <a href="https://www.xnovainternational.com/es/privacy-policy-xnova">Privacidad</a> ·
+    <a href="https://www.xnovainternational.com/es/legal-xnova">Términos</a> ·
+    <a href="https://www.xnovainternational.com/es/contact">Contacto</a>
+  </span>
+</footer>
+
+<script>
+  const i18n = {
+    es: {
+      langLabel: 'Idioma',
+      heroEyebrow: '100% de los datos de comercio internacional',
+      heroTitle: 'La plataforma líder de<br>inteligencia de mercado<br>para <em>exportadores</em>',
+      heroSub: 'Con xNova el equipo de exportación obtiene en una única plataforma toda la información necesaria para vender en cualquier mercado.',
+      heroCta: 'Reserva tu demo →',
+      heroCompare: 'Ver comparativa',
+      stats: ['Países cubiertos', 'Aumento medio de clientes', 'Más ingresos por cliente', 'Empresas exportadoras'],
+      featuresEyebrow: 'Funcionalidades de la plataforma',
+      featuresTitle: 'Todo lo que necesita tu<br>departamento de exportación',
+      featuresSub: 'Desde la prospección hasta el cierre, xNova cubre todo el ciclo exportador en una única plataforma integrada.',
+      featureTitles: ['Cobertura de mercados global', 'Buscador de importadores', 'Inteligencia competitiva', 'Datos de contacto'],
+      featureTexts: [
+        'Accede a 180+ mercados con datos regulatorios en tiempo real y normativas locales integradas.',
+        'Encuentra todos los importadores de tu producto en cada mercado con su historial de compras completo.',
+        'Descubre lo que exporta tu competencia: a quién vende, con qué frecuencia y en qué volumen.',
+        'Obtén nombre, email y teléfono del responsable de compras sin salir de la plataforma.'
+      ],
+      uxEyebrow: 'Experiencia de usuario',
+      uxTitle: 'Diseñado para equipos exportadores,<br>no para desarrolladores',
+      uxSub: 'Arrastra el control para comparar la interfaz de xNova con la de un competidor típico.',
+      sliderLeft: 'Competidor',
+      sliderRight: 'xNova',
+      compareEyebrow: 'Comparativa de competidores',
+      compareTitle: 'xNova vs la competencia',
+      compareSub: 'Selecciona un competidor para ver una comparación detallada de capacidades.',
+      compareWith: 'Comparar con:',
+      recommended: '✦ Recomendado',
+      xnovaList: [
+        'Gestión completa del ciclo exportador en una sola plataforma',
+        'Cobertura de 180+ países, la más amplia del sector',
+        'Datos de facturación y contacto para que no necesites más plataformas de datos',
+        'Plataforma exclusiva para departamentos de exportación',
+        'Implementación en menos de 2 meses gracias a nuestro equipo dedicado'
+      ],
+      whyEyebrow: 'Por qué las empresas eligen xNova',
+      whyTitle: 'La plataforma en la que<br>confían los exportadores',
+      whyTitles: ['Mayor cobertura de mercado del sector', 'Construida exclusivamente para exportación', 'El tiempo de implantación más rápido'],
+      whyTexts: [
+        'xNova cubre más de 180 países con datos regulatorios siempre actualizados — más que cualquier competidor.',
+        'A diferencia de las plataformas logísticas que añaden exportación como accesorio, xNova nació para los departamentos de exportación.',
+        'Nuestros clientes están operativos en menos de 2 semanas con onboarding personalizado y migración ERP incluida.'
+      ],
+      perf: 'Métricas de rendimiento',
+      tableEyebrow: 'Tabla comparativa completa',
+      tableTitle: 'Comparativa funcional detallada',
+      tableSub: 'Comprueba exactamente cómo se posiciona xNova frente a los principales competidores del mercado.',
+      tableHeadFeature: 'Funcionalidad',
+      tableRows: ['Módulo de dpto. de exportación', 'Cobertura de mercado', 'Clasificación HS con IA', 'Integración ERP nativa', 'Cumplimiento en tiempo real', 'Documentación automatizada', 'Screening de sanciones', 'Tiempo de implantación', 'Soporte dedicado exportación', 'Dashboard de analytics'],
+      ctaEyebrow: '¿Listo para dar el salto?',
+      ctaTitle: 'La única plataforma que<br>tu equipo exportador necesita',
+      ctaText: 'Únete a más de 500 empresas exportadoras que eligieron xNova por su mayor cobertura de mercado, cumplimiento automatizado y operaciones más ágiles.',
+      ctaSales: 'Hablar con ventas',
+      footerRights: '© 2025 xNova International. Todos los derechos reservados.',
+      footerLinks: ['Privacidad', 'Términos', 'Contacto']
+    },
+    en: {
+      langLabel: 'Language', heroEyebrow: '100% of international trade data',
+      heroTitle: 'The leading market intelligence<br>platform for <em>exporters</em>', heroSub: 'With xNova, export teams get all the information they need in one platform to sell in any market.',
+      heroCta: 'Book your demo →', heroCompare: 'View comparison',
+      stats: ['Countries covered', 'Average client growth', 'More revenue per client', 'Exporting companies'],
+      featuresEyebrow: 'Platform features', featuresTitle: 'Everything your<br>export department needs',
+      featuresSub: 'From prospecting to close, xNova covers the full export cycle in one integrated platform.',
+      featureTitles: ['Global market coverage', 'Importer search engine', 'Competitive intelligence', 'Contact data'],
+      featureTexts: ['Access 180+ markets with real-time regulatory data and local requirements.', 'Find all importers for your product in each market with full purchase history.', 'Discover what your competitors export: to whom, how often, and in what volume.', 'Get buyer contact name, email, and phone without leaving the platform.'],
+      uxEyebrow: 'User experience', uxTitle: 'Built for export teams,<br>not developers', uxSub: 'Drag the handle to compare xNova\'s interface with a typical competitor.',
+      sliderLeft: 'Competitor', sliderRight: 'xNova',
+      compareEyebrow: 'Competitor comparison', compareTitle: 'xNova vs competition', compareSub: 'Select a competitor to see a detailed capability comparison.', compareWith: 'Compare with:', recommended: '✦ Recommended',
+      xnovaList: ['Complete export cycle management in one platform', 'Coverage across 180+ countries, the broadest in the market', 'Billing and contact data so you do not need additional data platforms', 'Platform built exclusively for export departments', 'Implementation in less than 2 months thanks to our dedicated team'],
+      whyEyebrow: 'Why companies choose xNova', whyTitle: 'The platform exporters<br>trust',
+      whyTitles: ['Broadest market coverage', 'Built exclusively for export', 'Fastest implementation time'],
+      whyTexts: ['xNova covers more than 180 countries with always-updated regulatory data.', 'Unlike logistics platforms that add export as a side feature, xNova was built for export departments.', 'Our customers go live in under 2 weeks with personalized onboarding and ERP migration.'],
+      perf: 'Performance metrics', tableEyebrow: 'Full comparison table', tableTitle: 'Detailed functional comparison',
+      tableSub: 'Check exactly how xNova compares against top competitors.', tableHeadFeature: 'Feature',
+      tableRows: ['Export department module', 'Market coverage', 'AI HS classification', 'Native ERP integration', 'Real-time compliance', 'Automated documentation', 'Sanctions screening', 'Implementation time', 'Dedicated export support', 'Analytics dashboard'],
+      ctaEyebrow: 'Ready to level up?', ctaTitle: 'The only platform<br>your export team needs', ctaText: 'Join 500+ exporting companies that chose xNova for broader coverage, automated compliance, and more agile operations.', ctaSales: 'Talk to sales',
+      footerRights: '© 2025 xNova International. All rights reserved.', footerLinks: ['Privacy', 'Terms', 'Contact']
+    },
+    it: {
+      langLabel: 'Lingua', heroEyebrow: '100% dei dati sul commercio internazionale',
+      heroTitle: 'La piattaforma leader di<br>market intelligence per <em>esportatori</em>', heroSub: 'Con xNova, il team export ottiene in un\'unica piattaforma tutte le informazioni necessarie per vendere in qualsiasi mercato.',
+      heroCta: 'Prenota la demo →', heroCompare: 'Vedi confronto',
+      stats: ['Paesi coperti', 'Crescita media clienti', 'Più ricavi per cliente', 'Aziende esportatrici'],
+      featuresEyebrow: 'Funzionalità della piattaforma', featuresTitle: 'Tutto ciò che serve al tuo<br>reparto export',
+      featuresSub: 'Dalla prospezione alla chiusura, xNova copre l\'intero ciclo export in un\'unica piattaforma integrata.',
+      featureTitles: ['Copertura globale dei mercati', 'Motore di ricerca importatori', 'Intelligenza competitiva', 'Dati di contatto'],
+      featureTexts: ['Accedi a oltre 180 mercati con dati normativi in tempo reale e requisiti locali.', 'Trova tutti gli importatori del tuo prodotto in ogni mercato con storico acquisti completo.', 'Scopri cosa esportano i tuoi competitor: a chi, con quale frequenza e in che volume.', 'Ottieni nome, email e telefono del responsabile acquisti senza uscire dalla piattaforma.'],
+      uxEyebrow: 'Esperienza utente', uxTitle: 'Progettata per team export,<br>non per sviluppatori', uxSub: 'Trascina il cursore per confrontare l\'interfaccia di xNova con quella di un competitor.',
+      sliderLeft: 'Competitor', sliderRight: 'xNova',
+      compareEyebrow: 'Confronto competitor', compareTitle: 'xNova vs concorrenza', compareSub: 'Seleziona un competitor per vedere un confronto dettagliato delle funzionalità.', compareWith: 'Confronta con:', recommended: '✦ Consigliato',
+      xnovaList: ['Gestione completa del ciclo export in un\'unica piattaforma', 'Copertura di oltre 180 paesi, la più ampia del settore', 'Dati di fatturazione e contatto per evitare altre piattaforme dati', 'Piattaforma esclusiva per reparti export', 'Implementazione in meno di 2 mesi grazie al nostro team dedicato'],
+      whyEyebrow: 'Perché le aziende scelgono xNova', whyTitle: 'La piattaforma di cui<br>si fidano gli esportatori',
+      whyTitles: ['Maggiore copertura di mercato', 'Costruita esclusivamente per l\'export', 'Il tempo di implementazione più rapido'],
+      whyTexts: ['xNova copre oltre 180 paesi con dati normativi sempre aggiornati.', 'A differenza delle piattaforme logistiche che aggiungono l\'export come funzione accessoria, xNova è nata per i reparti export.', 'I nostri clienti sono operativi in meno di 2 settimane con onboarding personalizzato e migrazione ERP inclusa.'],
+      perf: 'Metriche di performance', tableEyebrow: 'Tabella comparativa completa', tableTitle: 'Confronto funzionale dettagliato',
+      tableSub: 'Verifica esattamente come xNova si posiziona rispetto ai principali competitor.', tableHeadFeature: 'Funzionalità',
+      tableRows: ['Modulo reparto export', 'Copertura di mercato', 'Classificazione HS con IA', 'Integrazione ERP nativa', 'Compliance in tempo reale', 'Documentazione automatizzata', 'Screening sanzioni', 'Tempo di implementazione', 'Supporto export dedicato', 'Dashboard analytics'],
+      ctaEyebrow: 'Pronto a fare il salto?', ctaTitle: 'L\'unica piattaforma<br>di cui il tuo team export ha bisogno', ctaText: 'Unisciti a oltre 500 aziende esportatrici che hanno scelto xNova per una copertura maggiore, compliance automatizzata e operazioni più agili.', ctaSales: 'Parla con sales',
+      footerRights: '© 2025 xNova International. Tutti i diritti riservati.', footerLinks: ['Privacy', 'Termini', 'Contatto']
+    }
+  };
+
+  const compDataByLang = {
+    es: {
+      flexport: { name: 'Flexport', pros: ['Sólida red de freight forwarding', 'Seguimiento de envíos en tiempo real'], cons: ['Sin módulo de departamento de exportación', 'Automatización de cumplimiento muy limitada', 'Sin clasificación IA de códigos HS', 'Requiere integraciones de terceros para ERP', 'Enfocado en logística, no en exportación integral'] },
+      expeditors: { name: 'Expeditors', pros: ['Presencia logística global', 'Fuertes relaciones con transportistas'], cons: ['Sin módulo de exportación dedicado', 'Documentación mayormente manual', 'Sin automatización de cumplimiento', 'Sin funcionalidades de IA', 'Implantación lenta (6–12 semanas)', 'Analytics muy limitado'] },
+      amber: { name: 'Amber Road', pros: ['Enfoque en cumplimiento del comercio exterior', 'Screening de sanciones incluido'], cons: ['Sin integración logística', 'UI/UX desactualizada', 'Cobertura de mercado limitada', 'Sin clasificación IA', 'Implantación lenta y compleja', 'Sin flujos para equipos exportadores'] },
+      sap: { name: 'SAP GTS', pros: ['Sólido motor de cumplimiento', 'Integración profunda con SAP', 'Seguridad enterprise'], cons: ['Implantación extremadamente compleja (3–6 meses)', 'Requiere ecosistema SAP', 'Sin UX dedicada para exportación', 'TCO muy elevado', 'Cobertura limitada fuera del ecosistema SAP'] }
+    },
+    en: {
+      flexport: { name: 'Flexport', pros: ['Strong freight forwarding network', 'Real-time shipment tracking'], cons: ['No dedicated export department module', 'Very limited compliance automation', 'No AI HS classification', 'Requires third-party ERP integrations', 'Focused on logistics, not end-to-end export'] },
+      expeditors: { name: 'Expeditors', pros: ['Global logistics footprint', 'Strong carrier relationships'], cons: ['No dedicated export module', 'Mostly manual documentation', 'No compliance automation', 'No AI capabilities', 'Slow implementation (6–12 weeks)', 'Very limited analytics'] },
+      amber: { name: 'Amber Road', pros: ['Strong trade compliance focus', 'Includes sanctions screening'], cons: ['No logistics integration', 'Outdated UI/UX', 'Limited market coverage', 'No AI classification', 'Slow and complex implementation', 'No workflows for export teams'] },
+      sap: { name: 'SAP GTS', pros: ['Robust compliance engine', 'Deep SAP integration', 'Enterprise-grade security'], cons: ['Extremely complex implementation (3–6 months)', 'Requires SAP ecosystem', 'No export-focused UX', 'Very high TCO', 'Limited coverage outside SAP stack'] }
+    },
+    it: {
+      flexport: { name: 'Flexport', pros: ['Solida rete di freight forwarding', 'Monitoraggio spedizioni in tempo reale'], cons: ['Nessun modulo dedicato al reparto export', 'Automazione compliance molto limitata', 'Nessuna classificazione HS con IA', 'Richiede integrazioni ERP di terze parti', 'Orientata alla logistica, non all’export end-to-end'] },
+      expeditors: { name: 'Expeditors', pros: ['Presenza logistica globale', 'Forti relazioni con i vettori'], cons: ['Nessun modulo export dedicato', 'Documentazione per lo più manuale', 'Nessuna automazione compliance', 'Nessuna funzionalità IA', 'Implementazione lenta (6–12 settimane)', 'Analytics molto limitata'] },
+      amber: { name: 'Amber Road', pros: ['Focus forte sulla compliance commerciale', 'Screening sanzioni incluso'], cons: ['Nessuna integrazione logistica', 'UI/UX datata', 'Copertura di mercato limitata', 'Nessuna classificazione IA', 'Implementazione lenta e complessa', 'Nessun flusso per team export'] },
+      sap: { name: 'SAP GTS', pros: ['Motore compliance solido', 'Integrazione profonda con SAP', 'Sicurezza enterprise'], cons: ['Implementazione estremamente complessa (3–6 mesi)', 'Richiede ecosistema SAP', 'Nessuna UX dedicata all’export', 'TCO molto elevato', 'Copertura limitata fuori dall’ecosistema SAP'] }
+    }
+  };
+
+  let currentLang = 'es';
+
+  function applyLanguage(lang) {
+    const t = i18n[lang] || i18n.es;
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.getElementById('langLabel').textContent = t.langLabel;
+    document.querySelector('#hero .hero-eyebrow').textContent = t.heroEyebrow;
+    document.querySelector('#hero h1').innerHTML = t.heroTitle;
+    document.querySelector('#hero .hero-sub').textContent = t.heroSub;
+    document.querySelector('#hero .btn-primary').textContent = t.heroCta;
+    document.querySelector('#hero .btn-outline').textContent = t.heroCompare;
+    document.querySelectorAll('#hero .stat-label').forEach((el, i) => el.textContent = t.stats[i]);
+    document.querySelector('#features .eyebrow').textContent = t.featuresEyebrow;
+    document.querySelector('#features h2').innerHTML = t.featuresTitle;
+    document.querySelector('#features .section-desc').textContent = t.featuresSub;
+    document.querySelectorAll('#features .feature-card h3').forEach((el, i) => el.textContent = t.featureTitles[i]);
+    document.querySelectorAll('#features .feature-card p').forEach((el, i) => el.textContent = t.featureTexts[i]);
+    document.querySelector('#ux-slider .eyebrow').textContent = t.uxEyebrow;
+    document.querySelector('#ux-slider h2').innerHTML = t.uxTitle;
+    document.querySelector('#ux-slider .section-desc').textContent = t.uxSub;
+    document.querySelector('.slider-label.left').textContent = t.sliderLeft;
+    document.querySelector('.slider-label.right').textContent = t.sliderRight;
+    document.querySelector('#compare .eyebrow').textContent = t.compareEyebrow;
+    document.querySelector('#compare h2').textContent = t.compareTitle;
+    document.querySelector('#compare .section-desc').textContent = t.compareSub;
+    document.querySelector('#compare .selector-label').textContent = t.compareWith;
+    document.querySelector('#compare .badge-winner').textContent = t.recommended;
+    document.querySelectorAll('#compare .compare-card.xnova .compare-list li').forEach((el, i) => {
+      const icon = el.querySelector('span');
+      el.innerHTML = `${icon ? icon.outerHTML : ''} ${t.xnovaList[i]}`;
+    });
+    document.querySelector('#why-us .eyebrow').textContent = t.whyEyebrow;
+    document.querySelector('#why-us h2').innerHTML = t.whyTitle;
+    document.querySelectorAll('#why-us .why-item h4').forEach((el, i) => el.textContent = t.whyTitles[i]);
+    document.querySelectorAll('#why-us .why-item p').forEach((el, i) => el.textContent = t.whyTexts[i]);
+    document.querySelector('#why-us .why-visual .eyebrow').textContent = t.perf;
+    document.querySelector('#feature-table .eyebrow').textContent = t.tableEyebrow;
+    document.querySelector('#feature-table h2').textContent = t.tableTitle;
+    document.querySelector('#feature-table .section-desc').textContent = t.tableSub;
+    document.querySelector('#feature-table thead th').textContent = t.tableHeadFeature;
+    document.querySelectorAll('#feature-table tbody tr td:first-child').forEach((el, i) => el.textContent = t.tableRows[i]);
+    document.querySelector('#cta-footer .eyebrow').textContent = t.ctaEyebrow;
+    document.querySelector('#cta-footer h2').innerHTML = t.ctaTitle;
+    document.querySelector('#cta-footer p').textContent = t.ctaText;
+    document.querySelector('#cta-footer .btn-primary').textContent = t.heroCta;
+    document.querySelector('#cta-footer .btn-outline-white').textContent = t.ctaSales;
+    document.querySelector('footer > span').textContent = t.footerRights;
+    const footerLinks = document.querySelectorAll('footer span a');
+    footerLinks.forEach((el, i) => { if (t.footerLinks[i]) el.textContent = t.footerLinks[i]; });
+
+    const localePath = lang === 'es' ? 'es' : lang;
+    document.querySelectorAll('a[href*="xnovainternational.com/"]').forEach((a) => {
+      a.href = a.href.replace(/\/(es|en|it)\//, `/${localePath}/`);
+    });
+
+    const activeBtn = document.querySelector('.comp-btn.active') || document.querySelector('.comp-btn[data-key="flexport"]');
+    if (activeBtn) selectComp(activeBtn, activeBtn.dataset.key);
+  }
+
+  function selectComp(btn, key) {
+    document.querySelectorAll('.comp-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const d = (compDataByLang[currentLang] || compDataByLang.es)[key];
+    document.getElementById('comp-name').textContent = d.name;
+    const list = document.getElementById('comp-list');
+    list.innerHTML = '';
+    d.pros.forEach(t => list.innerHTML += `<li class="positive"><span class="icon-check">✓</span> ${t}</li>`);
+    d.cons.forEach(t => list.innerHTML += `<li class="negative"><span class="icon-cross">✕</span> ${t}</li>`);
+  }
+
+  const langSwitcher = document.getElementById('langSwitcher');
+  if (langSwitcher) {
+    const storedLang = localStorage.getItem('xnova_lang') || 'es';
+    langSwitcher.value = storedLang;
+    applyLanguage(storedLang);
+    langSwitcher.addEventListener('change', function() {
+      localStorage.setItem('xnova_lang', this.value);
+      applyLanguage(this.value);
+    });
+  }
+
+  // Slider
+  const wrapper = document.getElementById('sliderWrapper');
+  const overlay  = document.getElementById('sliderOverlay');
+  const divider  = document.getElementById('sliderDivider');
+  const handle   = document.getElementById('sliderHandle');
+  let dragging   = false;
+
+  function setSlider(x) {
+    const rect = wrapper.getBoundingClientRect();
+    let pct = Math.max(5, Math.min(95, ((x - rect.left) / rect.width) * 100));
+    overlay.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    divider.style.left = handle.style.left = pct + '%';
+  }
+
+  wrapper.addEventListener('mousedown',  e => { dragging = true; setSlider(e.clientX); });
+  wrapper.addEventListener('touchstart', e => { dragging = true; setSlider(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('mousemove',   e => { if (dragging) setSlider(e.clientX); });
+  window.addEventListener('touchmove',   e => { if (dragging) setSlider(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('mouseup',    () => dragging = false);
+  window.addEventListener('touchend',   () => dragging = false);
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.feature-card, .why-item, .metric-block, .compare-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(14px)';
+    el.style.transition = 'opacity .4s ease, transform .4s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>xNova — La Plataforma de Exportación</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f7f8fa;
+    --surface2: #eef0f4;
+    --accent: #0074ff;
+    --accent-hover: #005ecc;
+    --navy: #0D1B2A;
+    --text: #0D1B2A;
+    --text-light: #4a5568;
+    --muted: #8492a6;
+    --border: #e2e8f0;
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 60px; height: 72px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo img { height: 32px; display: block; }
+
+  .lang-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-light);
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+
+  .lang-switcher select {
+    appearance: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 34px 8px 14px;
+    background: #fff;
+    color: var(--text);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L2 4h8L6 8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  .lang-switcher select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    padding: 140px 60px 100px;
+    background: #fff;
+    position: relative; overflow: hidden;
+  }
+
+  #hero::before {
+    content: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 24px;
+    animation: fadeUp .5s ease both;
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+    font-weight: 700; line-height: 1.08; letter-spacing: -0.03em;
+    color: var(--navy); max-width: 860px; margin-bottom: 24px;
+    animation: fadeUp .55s .1s ease both;
+  }
+
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.15rem; color: var(--text-light);
+    max-width: 580px; line-height: 1.7; margin-bottom: 44px;
+    animation: fadeUp .55s .2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 14px; justify-content: center;
+    animation: fadeUp .55s .3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 14px 30px; border-radius: 100px;
+    font-weight: 600; font-size: 1rem; text-decoration: none;
+    transition: background .2s, transform .15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent; color: var(--text);
+    padding: 14px 30px; border-radius: 100px;
+    border: 1.5px solid var(--border);
+    font-weight: 500; font-size: 1rem; text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 64px; margin-top: 80px;
+    padding-top: 48px; border-top: 1px solid var(--border);
+    animation: fadeUp .55s .4s ease both;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-size: 2.4rem; font-weight: 700; color: var(--navy);
+    line-height: 1; letter-spacing: -0.03em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── LAYOUT ── */
+  .full-section { padding: 96px 60px; }
+  .full-section .inner { max-width: 1200px; margin: 0 auto; }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .eyebrow {
+    font-size: .72rem; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px; display: block;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700; letter-spacing: -0.025em; line-height: 1.15;
+    color: var(--navy); margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 1.05rem; color: var(--text-light);
+    max-width: 520px; line-height: 1.7; margin-bottom: 56px;
+  }
+
+  /* ── FEATURES ── */
+  #features { background: var(--surface); }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+
+  .feature-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px 24px;
+    transition: box-shadow .25s, transform .25s, border-color .25s;
+  }
+  .feature-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    transform: translateY(-4px);
+    border-color: rgba(0,116,255,0.25);
+  }
+
+  .feature-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    background: rgba(0,116,255,0.08);
+  }
+  .feature-icon .material-icons-round {
+    font-size: 24px; color: var(--accent);
+  }
+
+  .feature-card h3 { font-size: .95rem; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .feature-card p  { font-size: .88rem; color: var(--text-light); line-height: 1.6; }
+
+  /* ── COMPARE ── */
+  #compare { background: #fff; }
+
+  .competitor-selector {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 48px; flex-wrap: wrap;
+  }
+
+  .selector-label { color: var(--muted); font-size: .9rem; margin-right: 6px; font-weight: 500; }
+
+  .comp-btn {
+    background: var(--surface); border: 1.5px solid var(--border);
+    color: var(--text-light); padding: 8px 20px; border-radius: 100px;
+    font-size: .88rem; cursor: pointer; transition: all .2s;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+  }
+  .comp-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .comp-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .comp-select {
+    background: var(--surface); border: 1.5px solid var(--border);
+    color: var(--text-light); padding: 10px 40px 10px 20px; border-radius: 100px;
+    font-size: .9rem; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-weight: 500; min-width: 200px;
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+  .comp-select:hover, .comp-select:focus { border-color: var(--accent); color: var(--accent); outline: none; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .compare-card {
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .compare-card.xnova {
+    background: #fff; border-color: var(--accent);
+    box-shadow: 0 4px 24px rgba(0,116,255,0.12);
+  }
+
+  .compare-card-header {
+    padding: 22px 28px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .compare-card.xnova .compare-card-header { background: rgba(0,116,255,0.04); }
+
+  .compare-brand { font-size: 1.15rem; font-weight: 700; color: var(--navy); }
+  .compare-card.xnova .compare-brand { color: var(--accent); }
+
+  .badge-winner {
+    background: var(--accent); color: #fff;
+    font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+    padding: 4px 12px; border-radius: 100px; text-transform: uppercase;
+  }
+
+  .compare-list { padding: 20px 28px; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .compare-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; line-height: 1.5; }
+  .compare-list li.positive { color: var(--text); }
+  .compare-list li.negative { color: var(--muted); }
+  .icon-check { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+  .icon-cross  { color: #cbd5e0;      flex-shrink: 0; margin-top: 1px; }
+
+  /* ── UX SLIDER ── */
+  #ux-slider { background: #fff; text-align: center; }
+  #ux-slider .inner { max-width: 1200px; margin: 0 auto; }
+
+  .slider-wrapper {
+    position: relative; width: 100%; max-width: 100%; margin: 0 auto;
+    border-radius: var(--radius-lg); overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    aspect-ratio: 900 / 420;
+    height: auto;
+  }
+
+  .slider-base, .slider-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .slider-base    { background: #fff; }
+  .slider-overlay { background: #fff; clip-path: inset(0 0 0 50%); }
+  .slider-base { z-index: 1; }
+  .slider-overlay { z-index: 2; }
+
+  .slider-divider {
+    position: absolute; top: 0; bottom: 0; width: 2px;
+    background: var(--accent); left: 50%; transform: translateX(-50%);
+    pointer-events: none; z-index: 5;
+  }
+  .slider-handle {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .85rem; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,116,255,0.35);
+    z-index: 6; cursor: col-resize; user-select: none;
+  }
+
+  .slider-label {
+    position: absolute; top: 20px; z-index: 10;
+    background: rgba(255,255,255,0.95); border: 1px solid var(--border);
+    padding: 5px 14px; border-radius: 100px;
+    font-size: .8rem; font-weight: 600; color: var(--text-light);
+    pointer-events: none;
+  }
+  .slider-label.left  { left: 20px; }
+  .slider-label.right { right: 20px; color: var(--accent); border-color: rgba(255,90,0,0.3); }
+
+  .slider-comp-select {
+    position: absolute; top: 20px; right: 20px; z-index: 10;
+    background: rgba(255,255,255,0.95); border: 1px solid var(--border);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: .8rem; font-weight: 600; color: var(--text-light);
+    font-family: 'DM Sans', sans-serif; cursor: pointer;
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .slider-comp-select:hover { border-color: var(--accent); color: var(--accent); }
+
+  .slider-fullscreen-btn {
+    position: absolute; bottom: 12px; right: 12px; z-index: 12;
+    width: 28px; height: 28px; border-radius: 6px;
+    background: rgba(0,0,0,0.5); color: #fff;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .slider-fullscreen-btn:hover { background: rgba(0,0,0,0.7); }
+  .slider-fullscreen-btn .material-icons-round { font-size: 16px; }
+  .slider-wrapper:fullscreen,
+  .slider-wrapper:-webkit-full-screen {
+    background: #0D1B2A; max-width: none; width: 100vw; height: 100vh;
+  }
+  .slider-wrapper:fullscreen .slider-fullscreen-btn,
+  .slider-wrapper:-webkit-full-screen .slider-fullscreen-btn {
+    background: rgba(255,255,255,0.2);
+  }
+  .slider-wrapper:fullscreen .slider-fullscreen-btn:hover,
+  .slider-wrapper:-webkit-full-screen .slider-fullscreen-btn:hover {
+    background: rgba(255,255,255,0.3);
+  }
+
+  .screen-mockup {
+    width: 100%; height: 100%; border-radius: 0; overflow: hidden;
+    display: flex; align-items: stretch; justify-content: stretch;
+  }
+  .screen-mockup img.slider-screenshot {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .screen-bar {
+    height: 30px; display: flex; align-items: center; gap: 6px;
+    padding: 0 14px; background: #f1f3f5;
+  }
+  .screen-bar span { width: 8px; height: 8px; border-radius: 50%; }
+  .screen-bar span:nth-child(1) { background: #ff5f57; }
+  .screen-bar span:nth-child(2) { background: #febc2e; }
+  .screen-bar span:nth-child(3) { background: #28c840; }
+
+  .screen-body  { padding: 20px; background: #fff; }
+  .screen-row   { height: 10px; border-radius: 5px; margin-bottom: 9px; background: #e9ecef; }
+  .screen-row.w80 { width: 80%; } .screen-row.w60 { width: 60%; } .screen-row.w90 { width: 90%; }
+  .screen-row.accent { background: rgba(0,116,255,0.2); width: 45%; }
+  .screen-cols  { display: flex; gap: 8px; margin-top: 14px; }
+  .screen-col   { flex: 1; height: 50px; border-radius: 8px; background: #f1f3f5; }
+  .screen-col.highlight { background: rgba(0,116,255,0.1); border: 1px solid rgba(0,116,255,0.2); }
+
+  .comp-screen .screen-body { background: #f5f7fa; }
+  .comp-row { height: 10px; border-radius: 2px; margin-bottom: 9px; background: #d5dae3; }
+  .comp-row.w80 { width: 80%; } .comp-row.w60 { width: 60%; }
+  .comp-cols { display: flex; gap: 8px; margin-top: 14px; }
+  .comp-col  { flex: 1; height: 50px; border-radius: 4px; background: #e4e7ec; }
+
+  /* ── CLIENT LOGO STRIP ── */
+  #client-strip {
+    background: #fff;
+    padding: 18px 60px 14px;
+  }
+  .client-strip-title {
+    text-align: center;
+    font-size: 1.05rem;
+    color: #8a8f98;
+    font-weight: 500;
+    margin-bottom: 18px;
+  }
+  .logo-marquee { overflow: hidden; }
+  .logo-track {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(26px, 6vw, 90px);
+    flex-wrap: wrap;
+  }
+  .logo-item {
+    flex: 0 0 auto;
+    padding: 4px 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-item img {
+    height: clamp(24px, 3vw, 44px);
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    opacity: 0.62;
+    filter: grayscale(1);
+  }
+
+  /* ── WHY US ── */
+  #why-us { background: #fff; }
+
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+
+  .why-list { display: flex; flex-direction: column; gap: 16px; margin-top: 36px; }
+
+  .why-item {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 22px 20px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .why-item:hover { border-color: rgba(0,116,255,0.3); box-shadow: 0 4px 20px rgba(0,116,255,0.07); }
+
+  .why-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); opacity: .45; line-height: 1; flex-shrink: 0; min-width: 32px; }
+  .why-item h4 { font-size: .95rem; font-weight: 600; color: var(--navy); margin-bottom: 5px; }
+  .why-item p  { font-size: .88rem; color: var(--text-light); line-height: 1.6; }
+
+  .why-visual {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 36px; position: relative; overflow: hidden;
+  }
+  .why-visual::after {
+    content: ''; position: absolute; bottom: -80px; right: -80px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(0,116,255,0.07), transparent 70%);
+    pointer-events: none;
+  }
+
+  .metric-block { margin-bottom: 22px; }
+  .metric-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .metric-name { font-size: .82rem; font-weight: 500; color: var(--text-light); }
+  .metric-val  { font-size: .82rem; font-weight: 700; color: var(--accent); }
+  .metric-track { background: var(--surface2); border-radius: 100px; height: 7px; }
+  .metric-fill  { height: 7px; border-radius: 100px; margin-bottom: 5px; }
+  .metric-fill.xnova { background: var(--accent); }
+  .metric-fill.comp  { background: #cbd5e0; }
+  .metric-labels-row { display: flex; justify-content: space-between; font-size: .75rem; color: var(--muted); margin-top: 4px; }
+
+  /* ── FEATURE TABLE ── */
+  #feature-table { background: var(--surface); }
+
+  .table-wrap {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--navy); }
+  thead th {
+    padding: 16px 24px; text-align: left;
+    font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+    color: rgba(255,255,255,0.6); text-transform: uppercase;
+  }
+  thead th:first-child { width: 28%; color: #fff; }
+  thead th.xnova-col   { color: #7eb8ff; }
+
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #fafbfc; }
+
+  tbody td { padding: 14px 24px; font-size: .9rem; color: var(--text-light); }
+  tbody td:first-child { color: var(--navy); font-weight: 500; }
+
+  .check   { color: var(--accent); font-weight: 600; font-size: .9rem; }
+  .cross   { color: #cbd5e0; font-size: .95rem; }
+  .partial { color: #d97706; font-size: .82rem; font-weight: 600; background: #fffbeb; padding: 2px 8px; border-radius: 4px; }
+
+  .table-wrap th:nth-child(3), .table-wrap td:nth-child(3) {
+    background: rgba(0,116,255,0.06);
+  }
+
+  /* ── FOOTER ── */
+  #site-footer {
+    background: #ffffff;
+    padding: 40px clamp(14px, 3.8vw, 60px) 34px;
+  }
+  .footer-shell {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    background: #17191d;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 30px 28px 20px;
+    color: rgba(255,255,255,0.72);
+  }
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr 1.2fr;
+    gap: 28px;
+  }
+  .footer-brand-logo { height: 34px; width: auto; display: block; margin-bottom: 14px; opacity: .92; }
+  .footer-tagline { font-size: 1rem; color: rgba(255,255,255,0.5); line-height: 1.6; max-width: 240px; margin-bottom: 16px; }
+  .footer-actions { display: flex; flex-direction: column; gap: 8px; max-width: 170px; }
+  .footer-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 34px; border-radius: 999px; text-decoration: none; font-size: .92rem; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.28); color: rgba(255,255,255,0.92);
+  }
+  .footer-btn.primary { background: #1f6fff; border-color: transparent; color: #fff; }
+  .footer-social { margin-top: 18px; display: flex; gap: 8px; }
+  .footer-social a {
+    width: 44px; height: 44px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.12); color: #fff; text-decoration: none; font-size: .7rem; font-weight: 700;
+  }
+  .footer-social .yt-logo {
+    width: 32px;
+    height: 24px;
+  }
+  .footer-col h4 { font-size: 1.02rem; color: #fff; margin-bottom: 10px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .footer-col a { text-decoration: none; font-size: .94rem; color: rgba(255,255,255,0.65); }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr 1.2fr;
+    gap: 28px;
+  }
+  .footer-partners,
+  .footer-address,
+  .footer-legal,
+  .footer-rights {
+    grid-column: 1 / -1;
+  }
+  .footer-partners { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+  .footer-partners img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.9;
+  }
+  .partner-chip {
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 3px 8px;
+    font-size: .76rem; color: rgba(255,255,255,0.58); white-space: nowrap;
+  }
+  .footer-address { font-size: .88rem; color: rgba(255,255,255,0.46); margin-bottom: 8px; }
+  .footer-legal { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+  .footer-legal a { font-size: .88rem; color: rgba(255,255,255,0.55); text-decoration: none; }
+  .footer-legal a:hover { color: #fff; }
+  .footer-rights { font-size: .84rem; color: rgba(255,255,255,0.42); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    nav { padding: 0 24px; }
+    nav ul { display: none; }
+    .full-section { padding-left: 24px; padding-right: 24px; }
+    #client-strip { padding-left: 24px; padding-right: 24px; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .compare-grid, .why-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; flex-wrap: wrap; justify-content: center; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .footer-partners,
+    .footer-address,
+    .footer-legal,
+    .footer-rights { grid-column: 1 / -1; }
+  }
+  @media (max-width: 540px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    h1 { font-size: 2.2rem; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-shell { padding: 22px 16px 14px; }
+    #site-footer { padding: 28px 12px 22px; }
+    .footer-bottom { grid-template-columns: 1fr; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="https://cdn.prod.website-files.com/64dc839c17a54b1d728a0268/6509bd28d4868a5d4120c9f0_LOGO.png" alt="xNova International">
+  </div>
+  <label class="lang-switcher" for="langSwitcher">
+    <span id="langLabel">Idioma</span>
+    <select id="langSwitcher" aria-label="Seleccionar idioma">
+      <option value="es">ES</option>
+      <option value="it">IT</option>
+      <option value="en">EN</option>
+    </select>
+  </label>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <span class="hero-eyebrow">100% de los datos de comercio internacional</span>
+  <h1>La plataforma líder de<br>inteligencia de mercado<br>para <em>exportadores</em></h1>
+  <p class="hero-sub">Con xNova el equipo de exportación obtiene en una única plataforma toda la información necesaria para vender en cualquier mercado.</p>
+  <div class="hero-ctas">
+    <a href="https://www.xnovainternational.com/es/demo" class="btn-primary">
+      Reserva tu demo →
+    </a>
+    <a href="#compare" class="btn-outline">Ver comparativa</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">180<span>+</span></div>
+      <div class="stat-label">Países cubiertos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">22<span>%</span></div>
+      <div class="stat-label">Aumento medio de clientes</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">36<span>%</span></div>
+      <div class="stat-label">Más ingresos por cliente</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">500<span>+</span></div>
+      <div class="stat-label">Empresas exportadoras</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FEATURES -->
+<div id="features" class="full-section">
+  <div class="inner">
+    <span class="eyebrow">Funcionalidades de la plataforma</span>
+    <h2>Todo lo que necesita tu<br>departamento de exportación</h2>
+    <p class="section-desc">Desde la prospección hasta el cierre, xNova cubre todo el ciclo exportador en una única plataforma integrada.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-icons-round">public</span></div>
+        <h3>Cobertura de mercados global</h3>
+        <p>Accede a 180+ mercados con datos regulatorios en tiempo real y normativas locales integradas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-icons-round">search</span></div>
+        <h3>Buscador de importadores</h3>
+        <p>Encuentra todos los importadores de tu producto en cada mercado con su historial de compras completo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-icons-round">bar_chart</span></div>
+        <h3>Inteligencia competitiva</h3>
+        <p>Descubre lo que exporta tu competencia: a quién vende, con qué frecuencia y en qué volumen.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-icons-round">contact_phone</span></div>
+        <h3>Datos de contacto</h3>
+        <p>Obtén nombre, email y teléfono del responsable de compras sin salir de la plataforma.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- UX SLIDER -->
+<div id="ux-slider" class="full-section" style="background:#fff;">
+  <div class="inner" style="text-align:center;">
+    <span class="eyebrow">Experiencia de usuario</span>
+    <h2>Diseñado para equipos exportadores,<br>no para desarrolladores</h2>
+    <p class="section-desc" style="margin:0 auto 48px;">Arrastra el control para comparar la interfaz de xNova con la de un competidor típico.</p>
+
+    <div class="slider-wrapper" id="sliderWrapper">
+      <div class="slider-base">
+        <div class="screen-mockup">
+          <img class="slider-screenshot" src="xNova International.svg" alt="xNova">
+        </div>
+      </div>
+      <div class="slider-overlay" id="sliderOverlay">
+        <div class="screen-mockup comp-screen">
+          <img id="sliderCompImg" class="slider-screenshot" src="Descartes.svg" alt="Competidor">
+        </div>
+      </div>
+      <div class="slider-divider" id="sliderDivider"></div>
+      <div class="slider-handle" id="sliderHandle">⇔</div>
+      <select class="slider-comp-select" id="sliderCompSelect" aria-label="Seleccionar competidor">
+        <option value="descartes-datamyne">Descartes Datamyne</option>
+        <option value="pentatransactions">PentaTransactions</option>
+        <option value="tradeatlas">TradeAtlas</option>
+        <option value="datasur">Datasur</option>
+        <option value="exportgenius">ExportGenius</option>
+        <option value="globalwits">Globalwits</option>
+        <option value="abrahams">Abrahams</option>
+        <option value="tentdata">Tentdata</option>
+        <option value="trademo">Trademo</option>
+        <option value="panjiva">Panjiva</option>
+      </select>
+      <div class="slider-label left">xNova International</div>
+      <button type="button" class="slider-fullscreen-btn" id="sliderFullscreenBtn" aria-label="Pantalla completa">
+        <span class="material-icons-round">fullscreen</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- CLIENT LOGOS -->
+<div id="client-strip">
+  <div class="client-strip-title" id="clientStripTitle">¿Quién utiliza xNova?</div>
+  <div class="logo-marquee" aria-label="Logos de clientes">
+    <div class="logo-track">
+      <span class="logo-item"><img src="Grandi-Riso-Logo-High-Definition1-removebg-preview (1) 1.png" alt="Grandi Riso"></span>
+      <span class="logo-item"><img src="grupohalconlogo-removebg-preview 1.png" alt="Grupo Halcón"></span>
+      <span class="logo-item"><img src="Saint-Gobain_logo.svg 1.png" alt="Saint-Gobain"></span>
+      <span class="logo-item"><img src="skin system 1.png" alt="Skin System"></span>
+      <span class="logo-item"><img src="super_ego-removebg-preview 1.png" alt="Super Ego"></span>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- COMPARE -->
+<div id="compare" class="full-section">
+  <div class="inner">
+    <span class="eyebrow">Comparativa de competidores</span>
+    <h2>xNova vs la competencia</h2>
+    <p class="section-desc">Selecciona un competidor para ver una comparación detallada de capacidades.</p>
+
+    <div class="competitor-selector">
+      <span class="selector-label">Comparar con:</span>
+      <select id="compareCompSelect" class="comp-select">
+        <option value="descartes-datamyne">Descartes Datamyne</option>
+        <option value="pentatransactions">PentaTransactions</option>
+        <option value="tradeatlas">TradeAtlas</option>
+        <option value="datasur">Datasur</option>
+        <option value="exportgenius">ExportGenius</option>
+        <option value="globalwits">Globalwits</option>
+        <option value="abrahams">Abrahams</option>
+        <option value="tentdata">Tentdata</option>
+        <option value="trademo">Trademo</option>
+        <option value="panjiva">Panjiva</option>
+      </select>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card xnova">
+        <div class="compare-card-header">
+          <span class="compare-brand">xNova</span>
+          <span class="badge-winner">✦ Recomendado</span>
+        </div>
+        <ul class="compare-list">
+          <li class="positive"><span class="icon-check">✦</span> Gestión completa del ciclo exportador en una sola plataforma</li>
+          <li class="positive"><span class="icon-check">✦</span> Cobertura de 180+ países, la más amplia del sector</li>
+          <li class="positive"><span class="icon-check">✦</span> Datos de facturación y contacto para que no necesites más plataformas de datos</li>
+          <li class="positive"><span class="icon-check">✦</span> Plataforma exclusiva para departamentos de exportación</li>
+          <li class="positive"><span class="icon-check">✦</span> Implementación en menos de 2 meses gracias a nuestro equipo dedicado</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <div class="compare-card-header">
+          <span class="compare-brand" id="comp-name">Descartes Datamyne</span>
+        </div>
+        <ul class="compare-list" id="comp-list">
+          <li class="positive"><span class="icon-check">✓</span> Buen volumen de datos de comercio</li>
+          <li class="negative"><span class="icon-cross">✕</span> Sin UX pensada para exportadores</li>
+          <li class="negative"><span class="icon-cross">✕</span> Sin flujos de búsqueda comercial</li>
+          <li class="positive"><span class="icon-check">✓</span> Parcial en identificación de compradores</li>
+          <li class="negative"><span class="icon-cross">✕</span> Cobertura de países limitada</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="site-footer">
+  <div class="footer-shell">
+    <div class="footer-content">
+      <div class="footer-top">
+      <div class="footer-brand">
+        <img class="footer-brand-logo" src="assets%20foote/Logo%20xNova%20Blanco-2IDPu24r.svg" alt="xNova">
+        <p class="footer-tagline" id="footerTagline">Software de inteligencia comercial para empresas exportadoras.</p>
+        <div class="footer-actions">
+          <a class="footer-btn primary" href="https://app.xnovainternational.com/" id="footerLoginBtn">Log in</a>
+          <a class="footer-btn" href="https://www.xnovainternational.com/es/demo" id="footerDemoBtn">Reserva tu demo</a>
+        </div>
+        <div class="footer-social">
+          <a href="https://www.youtube.com/@xnovainternational" aria-label="YouTube">
+            <svg class="yt-logo" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M23.498 6.186a2.974 2.974 0 0 0-2.092-2.11C19.555 3.545 12 3.545 12 3.545s-7.555 0-9.406.53A2.974 2.974 0 0 0 .502 6.186 31.09 31.09 0 0 0 0 12a31.09 31.09 0 0 0 .502 5.814 2.974 2.974 0 0 0 2.092 2.11c1.85.53 9.406.53 9.406.53s7.555 0 9.406-.53a2.974 2.974 0 0 0 2.092-2.11A31.09 31.09 0 0 0 24 12a31.09 31.09 0 0 0-.502-5.814ZM9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/xnova-international/" aria-label="LinkedIn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20.447 20.452H16.89v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.347V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.063 2.063 0 1 1 0-4.126 2.063 2.063 0 0 1 0 4.126ZM7.119 20.452H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z" fill="#FFFFFF"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 id="footerColProduct">Producto</h4>
+        <ul>
+          <li><a href="#" id="footerProduct1">Buscador de importadores</a></li>
+          <li><a href="#" id="footerProduct2">Buscador de exportadores</a></li>
+          <li><a href="#" id="footerProduct3">Contactos</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 id="footerColData">Datos</h4>
+        <ul>
+          <li><a href="#">USA</a></li>
+          <li><a href="#">LATAM</a></li>
+          <li><a href="#">Mexico</a></li>
+          <li><a href="#">China</a></li>
+          <li><a href="#">Europe</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 id="footerColCompany">Empresa</h4>
+        <ul>
+          <li><a href="https://www.xnovainternational.com/es/about" id="footerCompany1">Sobre nosotros</a></li>
+          <li><a href="https://www.xnovainternational.com/es/contact" id="footerCompany2">Contacto</a></li>
+          <li><a href="#" id="footerCompany3">Casos de éxito</a></li>
+          <li><a href="#" id="footerCompany4">Precios</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 id="footerColOther">Otras soluciones</h4>
+        <ul>
+          <li><a href="#" id="footerOther1">Asociaciones</a></li>
+          <li><a href="#" id="footerOther2">Agentes comerciales</a></li>
+          <li><a href="#" id="footerOther3">Camaras de comercio</a></li>
+          <li><a href="#" id="footerOther4">Ferias internacionales</a></li>
+          <li><a href="#" id="footerOther5">Subsidios</a></li>
+          <li><a href="#" id="footerOther6">Listado de importadores</a></li>
+        </ul>
+      </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-partners">
+          <img src="assets%20foote/IVACE-BTL9NE98.png" alt="IVACE">
+          <img src="assets%20foote/Enisa-DnKCmgAt.png" alt="ENISA">
+          <img src="assets%20foote/Kit%20digital-xB5tuD93.webp" alt="Kit Digital">
+        </div>
+        <p class="footer-address" id="footerAddress">Edificio Lanzadera, La Marina de Valencia, España</p>
+        <div class="footer-legal">
+          <a href="https://www.xnovainternational.com/es/privacy-policy-xnova" id="footerLegal1">Privacidad</a>
+          <a href="https://www.xnovainternational.com/es/legal-xnova" id="footerLegal2">Terminos y condiciones</a>
+          <a href="https://www.xnovainternational.com/es/contact" id="footerLegal3">Contacto</a>
+        </div>
+        <p class="footer-rights" id="footerRights">© 2025 xNova International. Todos los derechos reservados.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const i18n = {
+    es: {
+      langLabel: 'Idioma',
+      heroEyebrow: '100% de los datos de comercio internacional',
+      heroTitle: 'La plataforma líder de<br>inteligencia de mercado<br>para <em>exportadores</em>',
+      heroSub: 'Con xNova el equipo de exportación obtiene en una única plataforma toda la información necesaria para vender en cualquier mercado.',
+      heroCta: 'Reserva tu demo →',
+      heroCompare: 'Ver comparativa',
+      featuresEyebrow: 'Funcionalidades de la plataforma',
+      featuresTitle: 'Todo lo que necesita tu<br>departamento de exportación',
+      featuresSub: 'Desde la prospección hasta el cierre, xNova cubre todo el ciclo exportador en una única plataforma integrada.',
+      uxEyebrow: 'Experiencia de usuario',
+      uxTitle: 'Diseñado para equipos exportadores,<br>no para desarrolladores',
+      uxSub: 'Arrastra el control para comparar la interfaz de xNova con la de un competidor típico.',
+      compareEyebrow: 'Comparativa de competidores',
+      compareTitle: 'xNova vs la competencia',
+      compareSub: 'Selecciona un competidor para ver una comparación detallada de capacidades.',
+      compareWith: 'Comparar con:',
+      recommended: '✦ Recomendado',
+      whyEyebrow: 'Por qué las empresas eligen xNova',
+      whyTitle: 'La plataforma en la que<br>confían los exportadores',
+      tableEyebrow: 'Tabla comparativa completa',
+      tableTitle: 'Comparativa funcional detallada',
+      tableSub: 'Comprueba exactamente cómo se posiciona xNova frente a los principales competidores del mercado.',
+      ctaEyebrow: '¿Listo para dar el salto?',
+      ctaTitle: 'La única plataforma que<br>tu equipo exportador necesita',
+      ctaText: 'Únete a más de 500 empresas exportadoras que eligieron xNova por su mayor cobertura de mercado, cumplimiento automatizado y operaciones más ágiles.',
+      ctaSales: 'Hablar con ventas',
+      footerRights: '© 2025 xNova International. Todos los derechos reservados.',
+      footerLinks: ['Privacidad', 'Términos', 'Contacto'],
+      footerTagline: 'Software de inteligencia comercial para empresas exportadoras.',
+      footerLogin: 'Log in',
+      footerDemo: 'Reserva tu demo',
+      footerCols: ['Producto', 'Datos', 'Empresa', 'Otras soluciones'],
+      footerProduct: ['Buscador de importadores', 'Buscador de exportadores', 'Contactos'],
+      footerCompany: ['Sobre nosotros', 'Contacto', 'Casos de éxito', 'Precios'],
+      footerOther: ['Asociaciones', 'Agentes comerciales', 'Camaras de comercio', 'Ferias internacionales', 'Subsidios', 'Listado de importadores'],
+      footerAddress: 'Edificio Lanzadera, La Marina de Valencia, España',
+      clientStripTitle: '¿Quién utiliza xNova?',
+      stats: ['Países cubiertos', 'Aumento medio de clientes', 'Más ingresos por cliente', 'Empresas exportadoras'],
+      featureTitles: ['Cobertura de mercados global', 'Buscador de importadores', 'Inteligencia competitiva', 'Datos de contacto'],
+      featureTexts: [
+        'Accede a 180+ mercados con datos regulatorios en tiempo real y normativas locales integradas.',
+        'Encuentra todos los importadores de tu producto en cada mercado con su historial de compras completo.',
+        'Descubre lo que exporta tu competencia: a quién vende, con qué frecuencia y en qué volumen.',
+        'Obtén nombre, email y teléfono del responsable de compras sin salir de la plataforma.'
+      ],
+      xnovaList: [
+        'Gestión completa del ciclo exportador en una sola plataforma',
+        'Cobertura de 180+ países, la más amplia del sector',
+        'Datos de facturación y contacto para que no necesites más plataformas de datos',
+        'Plataforma exclusiva para departamentos de exportación',
+        'Implementación en menos de 2 meses gracias a nuestro equipo dedicado'
+      ],
+      whyTitles: ['Mayor cobertura de mercado del sector', 'Construida exclusivamente para exportación', 'El tiempo de implantación más rápido'],
+      whyTexts: [
+        'xNova cubre más de 180 países con datos regulatorios siempre actualizados — más que cualquier competidor.',
+        'A diferencia de las plataformas logísticas que añaden exportación como accesorio, xNova nació para los departamentos de exportación.',
+        'Nuestros clientes están operativos en menos de 2 semanas con onboarding personalizado y migración ERP incluida.'
+      ],
+      perf: 'Métricas de rendimiento',
+      metricNames: ['Cobertura de mercado', 'Media de competidores', 'Automatización de cumplimiento', 'Tiempo de implantación'],
+      metricVals: ['180+ países', '~98 países', 'Completa', '95% más rápido'],
+      metricRows: [['xNova', '92%'], ['Competidores', '54%'], ['xNova', '88%'], ['xNova — <2 semanas', 'vs 3–6 meses']],
+      tableHeadFeature: 'Funcionalidad',
+      tableLabels: ['Cobertura de países', 'Volumen de datos', 'UX para exportadores', 'Flujos de búsqueda', 'Alertas de mercado', 'Identificación de compradores', 'Análisis de competencia', 'Precio/valor'],
+      yesLabel: '✦ Sí',
+      partialLabel: 'Parcial'
+    },
+    en: {
+      langLabel: 'Language',
+      heroEyebrow: '100% of international trade data',
+      heroTitle: 'The leading market intelligence<br>platform for <em>exporters</em>',
+      heroSub: 'With xNova, export teams get all the information they need in one platform to sell in any market.',
+      heroCta: 'Book your demo →',
+      heroCompare: 'View comparison',
+      featuresEyebrow: 'Platform features',
+      featuresTitle: 'Everything your<br>export department needs',
+      featuresSub: 'From prospecting to close, xNova covers the full export cycle in one integrated platform.',
+      uxEyebrow: 'User experience',
+      uxTitle: 'Built for export teams,<br>not developers',
+      uxSub: 'Drag the handle to compare xNova with a typical competitor.',
+      compareEyebrow: 'Competitor comparison',
+      compareTitle: 'xNova vs competition',
+      compareSub: 'Select a competitor to see a detailed capability comparison.',
+      compareWith: 'Compare with:',
+      recommended: '✦ Recommended',
+      whyEyebrow: 'Why companies choose xNova',
+      whyTitle: 'The platform exporters<br>trust',
+      tableEyebrow: 'Full comparison table',
+      tableTitle: 'Detailed functional comparison',
+      tableSub: 'Check exactly how xNova compares against top competitors.',
+      ctaEyebrow: 'Ready to level up?',
+      ctaTitle: 'The only platform<br>your export team needs',
+      ctaText: 'Join 500+ exporting companies that chose xNova for broader coverage, automated compliance, and agile operations.',
+      ctaSales: 'Talk to sales',
+      footerRights: '© 2025 xNova International. All rights reserved.',
+      footerLinks: ['Privacy', 'Terms', 'Contact'],
+      footerTagline: 'Market intelligence software for exporting companies.',
+      footerLogin: 'Log in',
+      footerDemo: 'Book your demo',
+      footerCols: ['Product', 'Data', 'Company', 'Other solutions'],
+      footerProduct: ['Importer finder', 'Exporter finder', 'Contacts'],
+      footerCompany: ['About us', 'Contact us', 'Success stories', 'Pricing'],
+      footerOther: ['Associations', 'Commercial agents', 'Chambers of commerce', 'International trade fairs', 'Subsidies', 'List of importers'],
+      footerAddress: 'Lanzadera Building, Marina de Valencia, Spain',
+      clientStripTitle: 'Who uses xNova?',
+      stats: ['Countries covered', 'Average client growth', 'More revenue per client', 'Exporting companies'],
+      featureTitles: ['Global market coverage', 'Importer search engine', 'Competitive intelligence', 'Contact data'],
+      featureTexts: [
+        'Access 180+ markets with real-time regulatory data and local rules integrated.',
+        'Find all importers for your product in every market with full purchase history.',
+        'Discover what your competitors export: to whom, how often, and in what volume.',
+        'Get buyer contact name, email, and phone without leaving the platform.'
+      ],
+      xnovaList: [
+        'Complete export cycle management in one platform',
+        'Coverage across 180+ countries, the broadest in the market',
+        'Billing and contact data so you do not need additional data platforms',
+        'Platform built exclusively for export departments',
+        'Implementation in less than 2 months thanks to our dedicated team'
+      ],
+      whyTitles: ['Broadest market coverage in the sector', 'Built exclusively for export', 'Fastest implementation time'],
+      whyTexts: [
+        'xNova covers more than 180 countries with always-updated regulatory data.',
+        'Unlike logistics platforms that add export as a side feature, xNova was built for export departments.',
+        'Our customers are operational in less than 2 weeks with personalized onboarding and ERP migration included.'
+      ],
+      perf: 'Performance metrics',
+      metricNames: ['Market coverage', 'Competitor average', 'Compliance automation', 'Implementation time'],
+      metricVals: ['180+ countries', '~98 countries', 'Complete', '95% faster'],
+      metricRows: [['xNova', '92%'], ['Competitors', '54%'], ['xNova', '88%'], ['xNova — <2 weeks', 'vs 3–6 months']],
+      tableHeadFeature: 'Feature',
+      tableLabels: ['Country coverage', 'Data volume', 'UX for exporters', 'Search workflows', 'Market alerts', 'Buyer identification', 'Competitive analysis', 'Price/value'],
+      yesLabel: '✦ Yes',
+      partialLabel: 'Partial'
+    },
+    it: {
+      langLabel: 'Lingua',
+      heroEyebrow: '100% dei dati sul commercio internazionale',
+      heroTitle: 'La piattaforma leader di<br>market intelligence per <em>esportatori</em>',
+      heroSub: 'Con xNova, il team export ottiene in un\'unica piattaforma tutte le informazioni necessarie per vendere in qualsiasi mercato.',
+      heroCta: 'Prenota la demo →',
+      heroCompare: 'Vedi confronto',
+      featuresEyebrow: 'Funzionalità della piattaforma',
+      featuresTitle: 'Tutto ciò che serve al tuo<br>reparto export',
+      featuresSub: 'Dalla prospezione alla chiusura, xNova copre l\'intero ciclo export in un\'unica piattaforma integrata.',
+      uxEyebrow: 'Esperienza utente',
+      uxTitle: 'Progettata per team export,<br>non per sviluppatori',
+      uxSub: 'Trascina il cursore per confrontare xNova con un competitor tipico.',
+      compareEyebrow: 'Confronto competitor',
+      compareTitle: 'xNova vs concorrenza',
+      compareSub: 'Seleziona un competitor per vedere un confronto dettagliato delle funzionalità.',
+      compareWith: 'Confronta con:',
+      recommended: '✦ Consigliato',
+      whyEyebrow: 'Perché le aziende scelgono xNova',
+      whyTitle: 'La piattaforma di cui<br>si fidano gli esportatori',
+      tableEyebrow: 'Tabella comparativa completa',
+      tableTitle: 'Confronto funzionale dettagliato',
+      tableSub: 'Verifica esattamente come xNova si posiziona rispetto ai principali competitor.',
+      ctaEyebrow: 'Pronto a fare il salto?',
+      ctaTitle: 'L\'unica piattaforma<br>di cui il tuo team export ha bisogno',
+      ctaText: 'Unisciti a oltre 500 aziende esportatrici che hanno scelto xNova per copertura maggiore, compliance automatizzata e operazioni più agili.',
+      ctaSales: 'Parla con sales',
+      footerRights: '© 2025 xNova International. Tutti i diritti riservati.',
+      footerLinks: ['Privacy', 'Termini', 'Contatto'],
+      footerTagline: 'Software di market intelligence per aziende esportatrici.',
+      footerLogin: 'Log in',
+      footerDemo: 'Prenota la demo',
+      footerCols: ['Prodotto', 'Dati', 'Azienda', 'Altre soluzioni'],
+      footerProduct: ['Ricerca importatori', 'Ricerca esportatori', 'Contatti'],
+      footerCompany: ['Chi siamo', 'Contattaci', 'Casi di successo', 'Prezzi'],
+      footerOther: ['Associazioni', 'Agenti commerciali', 'Camere di commercio', 'Fiere internazionali', 'Sussidi', 'Elenco importatori'],
+      footerAddress: 'Edificio Lanzadera, Marina de Valencia, Spagna',
+      clientStripTitle: 'Chi utilizza xNova?',
+      stats: ['Paesi coperti', 'Crescita media clienti', 'Più ricavi per cliente', 'Aziende esportatrici'],
+      featureTitles: ['Copertura globale dei mercati', 'Motore di ricerca importatori', 'Intelligenza competitiva', 'Dati di contatto'],
+      featureTexts: [
+        'Accedi a oltre 180 mercati con dati normativi in tempo reale e regole locali integrate.',
+        'Trova tutti gli importatori del tuo prodotto in ogni mercato con storico acquisti completo.',
+        'Scopri cosa esportano i concorrenti: a chi, con quale frequenza e in che volume.',
+        'Ottieni nome, email e telefono del buyer senza uscire dalla piattaforma.'
+      ],
+      xnovaList: [
+        'Gestione completa del ciclo export in un’unica piattaforma',
+        'Copertura di oltre 180 paesi, la più ampia del settore',
+        'Dati di fatturazione e contatto per non aver bisogno di altre piattaforme',
+        'Piattaforma esclusiva per reparti export',
+        'Implementazione in meno di 2 mesi grazie al nostro team dedicato'
+      ],
+      whyTitles: ['Maggiore copertura di mercato del settore', 'Costruita esclusivamente per l’export', 'Il tempo di implementazione più rapido'],
+      whyTexts: [
+        'xNova copre oltre 180 paesi con dati normativi sempre aggiornati.',
+        'A differenza delle piattaforme logistiche che aggiungono l’export come funzione accessoria, xNova è nata per i reparti export.',
+        'I nostri clienti sono operativi in meno di 2 settimane con onboarding personalizzato e migrazione ERP inclusa.'
+      ],
+      perf: 'Metriche di performance',
+      metricNames: ['Copertura di mercato', 'Media competitor', 'Automazione compliance', 'Tempo di implementazione'],
+      metricVals: ['180+ paesi', '~98 paesi', 'Completa', '95% più veloce'],
+      metricRows: [['xNova', '92%'], ['Competitor', '54%'], ['xNova', '88%'], ['xNova — <2 settimane', 'vs 3–6 mesi']],
+      tableHeadFeature: 'Funzionalità',
+      tableLabels: ['Copertura paesi', 'Volume dati', 'UX per esportatori', 'Flussi di ricerca', 'Alert di mercato', 'Identificazione buyer', 'Analisi competitor', 'Prezzo/valore'],
+      yesLabel: '✦ Sì',
+      partialLabel: 'Parziale'
+    }
+  };
+
+  let currentLang = 'es';
+
+  function applyLanguage(lang) {
+    const t = i18n[lang] || i18n.es;
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    const label = document.getElementById('langLabel');
+    if (label) label.textContent = t.langLabel;
+    document.querySelector('#hero .hero-eyebrow').textContent = t.heroEyebrow;
+    document.querySelector('#hero h1').innerHTML = t.heroTitle;
+    document.querySelector('#hero .hero-sub').textContent = t.heroSub;
+    document.querySelector('#hero .btn-primary').textContent = t.heroCta;
+    document.querySelector('#hero .btn-outline').textContent = t.heroCompare;
+    document.querySelectorAll('#hero .stat-label').forEach((el, i) => { if (t.stats[i]) el.textContent = t.stats[i]; });
+    document.querySelector('#features .eyebrow').textContent = t.featuresEyebrow;
+    document.querySelector('#features h2').innerHTML = t.featuresTitle;
+    document.querySelector('#features .section-desc').textContent = t.featuresSub;
+    document.querySelectorAll('#features .feature-card h3').forEach((el, i) => { if (t.featureTitles[i]) el.textContent = t.featureTitles[i]; });
+    document.querySelectorAll('#features .feature-card p').forEach((el, i) => { if (t.featureTexts[i]) el.textContent = t.featureTexts[i]; });
+    document.querySelector('#ux-slider .eyebrow').textContent = t.uxEyebrow;
+    document.querySelector('#ux-slider h2').innerHTML = t.uxTitle;
+    document.querySelector('#ux-slider .section-desc').textContent = t.uxSub;
+    document.querySelector('#compare .eyebrow').textContent = t.compareEyebrow;
+    document.querySelector('#compare h2').textContent = t.compareTitle;
+    document.querySelector('#compare .section-desc').textContent = t.compareSub;
+    const clientStripTitle = document.getElementById('clientStripTitle');
+    if (clientStripTitle) clientStripTitle.textContent = t.clientStripTitle;
+    document.querySelector('#compare .selector-label').textContent = t.compareWith;
+    document.querySelector('#compare .badge-winner').textContent = t.recommended;
+    document.querySelectorAll('#compare .compare-card.xnova .compare-list li').forEach((el, i) => {
+      const icon = el.querySelector('span');
+      if (icon && t.xnovaList[i]) el.innerHTML = `${icon.outerHTML} ${t.xnovaList[i]}`;
+    });
+    const whyEyebrow = document.querySelector('#why-us .eyebrow');
+    if (whyEyebrow) whyEyebrow.textContent = t.whyEyebrow;
+    const whyTitle = document.querySelector('#why-us h2');
+    if (whyTitle) whyTitle.innerHTML = t.whyTitle;
+    document.querySelectorAll('#why-us .why-item h4').forEach((el, i) => { if (t.whyTitles[i]) el.textContent = t.whyTitles[i]; });
+    document.querySelectorAll('#why-us .why-item p').forEach((el, i) => { if (t.whyTexts[i]) el.textContent = t.whyTexts[i]; });
+    const perfEyebrow = document.querySelector('#why-us .why-visual .eyebrow');
+    if (perfEyebrow) perfEyebrow.textContent = t.perf;
+    document.querySelectorAll('#why-us .metric-name').forEach((el, i) => { if (t.metricNames[i]) el.textContent = t.metricNames[i]; });
+    document.querySelectorAll('#why-us .metric-val').forEach((el, i) => { if (t.metricVals[i]) el.textContent = t.metricVals[i]; });
+    document.querySelectorAll('#why-us .metric-labels-row').forEach((row, i) => {
+      const spans = row.querySelectorAll('span');
+      if (spans[0] && t.metricRows[i]?.[0]) spans[0].textContent = t.metricRows[i][0];
+      if (spans[1] && t.metricRows[i]?.[1]) spans[1].textContent = t.metricRows[i][1];
+    });
+    const tableEyebrow = document.querySelector('#feature-table .eyebrow');
+    if (tableEyebrow) tableEyebrow.textContent = t.tableEyebrow;
+    const tableTitle = document.querySelector('#feature-table h2');
+    if (tableTitle) tableTitle.textContent = t.tableTitle;
+    const tableSub = document.querySelector('#feature-table .section-desc');
+    if (tableSub) tableSub.textContent = t.tableSub;
+    const thFeature = document.querySelector('#feature-table thead th');
+    if (thFeature) thFeature.textContent = t.tableHeadFeature;
+    const footerTagline = document.getElementById('footerTagline');
+    if (footerTagline) footerTagline.textContent = t.footerTagline;
+    const footerLoginBtn = document.getElementById('footerLoginBtn');
+    if (footerLoginBtn) footerLoginBtn.textContent = t.footerLogin;
+    const footerDemoBtn = document.getElementById('footerDemoBtn');
+    if (footerDemoBtn) footerDemoBtn.textContent = t.footerDemo;
+    const footerCols = ['footerColProduct', 'footerColData', 'footerColCompany', 'footerColOther'];
+    footerCols.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && t.footerCols?.[i]) el.textContent = t.footerCols[i];
+    });
+    const footerProduct = ['footerProduct1', 'footerProduct2', 'footerProduct3'];
+    footerProduct.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && t.footerProduct?.[i]) el.textContent = t.footerProduct[i];
+    });
+    const footerCompany = ['footerCompany1', 'footerCompany2', 'footerCompany3', 'footerCompany4'];
+    footerCompany.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && t.footerCompany?.[i]) el.textContent = t.footerCompany[i];
+    });
+    const footerOther = ['footerOther1', 'footerOther2', 'footerOther3', 'footerOther4', 'footerOther5', 'footerOther6'];
+    footerOther.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && t.footerOther?.[i]) el.textContent = t.footerOther[i];
+    });
+    const footerAddress = document.getElementById('footerAddress');
+    if (footerAddress) footerAddress.textContent = t.footerAddress;
+    const footerRights = document.getElementById('footerRights');
+    if (footerRights) footerRights.textContent = t.footerRights;
+    const footerLegal = ['footerLegal1', 'footerLegal2', 'footerLegal3'];
+    footerLegal.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && t.footerLinks?.[i]) el.textContent = t.footerLinks[i];
+    });
+    const localePath = lang === 'es' ? 'es' : lang;
+    document.querySelectorAll('a[href*="xnovainternational.com/"]').forEach((a) => {
+      a.href = a.href.replace(/\/(es|en|it)\//, `/${localePath}/`);
+    });
+
+  }
+
+  const langSwitcher = document.getElementById('langSwitcher');
+  if (langSwitcher) {
+    const storedLang = localStorage.getItem('xnova_lang') || 'es';
+    langSwitcher.value = storedLang;
+    applyLanguage(storedLang);
+    langSwitcher.addEventListener('change', function() {
+      localStorage.setItem('xnova_lang', this.value);
+      applyLanguage(this.value);
+      const selectedKey = document.getElementById('compareCompSelect')?.value || 'descartes-datamyne';
+      selectCompetitor(selectedKey);
+    });
+  }
+
+  const compData = {
+    'descartes-datamyne': {
+      name: 'Descartes Datamyne',
+      pros: ['Cobertura amplia en datos aduaneros y mirror', 'Potente para analistas de operaciones y logística'],
+      cons: ['Búsqueda centrada en SQL/transacciones', 'Pricing complejo con extras y add-ons', 'Sin navegación visual pensada para export managers']
+    },
+    'pentatransactions': {
+      name: 'PentaTransactions',
+      pros: ['Cobertura mundial en customs y mirror', 'Precio de entrada competitivo'],
+      cons: ['No ofrece datos de contacto de compradores', 'No incluye alertas, listas ni guardados avanzados', 'Experiencia de búsqueda técnica basada en transacciones']
+    },
+    'tradeatlas': {
+      name: 'TradeAtlas',
+      pros: ['Cobertura global de datos de comercio', 'Incluye paquete AI con recomendaciones'],
+      cons: ['Contactos principalmente genéricos', 'Visualización limitada y poco orientada a dashboards', 'Requiere trabajo manual para extraer insights accionables']
+    },
+    'datasur': {
+      name: 'Datasur',
+      pros: ['Buena propuesta para foco LATAM + USA', 'Planes de precio accesibles por región'],
+      cons: ['Cobertura geográfica limitada frente a xNova', 'No ofrece contactos de decisores de compra', 'Búsqueda y análisis con alta carga manual']
+    },
+    'exportgenius': {
+      name: 'ExportGenius',
+      pros: ['Cobertura amplia de fuentes transaccionales', 'Planes flexibles según alcance de datos'],
+      cons: ['Contactos limitados y de calidad irregular', 'Interfaz compleja para uso comercial diario', 'Orientado a datos brutos más que a flujos de exportación']
+    },
+    'globalwits': {
+      name: 'Globalwits',
+      pros: ['Plataforma muy completa con gran volumen de datos', 'Capacidad avanzada de contactos y segmentación'],
+      cons: ['Complejidad alta para perfiles no técnicos', 'Curva de aprendizaje elevada para extraer valor rápido', 'Experiencia poco simplificada para export managers']
+    },
+    'abrahams': {
+      name: 'Abrahams',
+      pros: ['Base global amplia de comercio y empresas', 'Planes escalables para distintos tamaños de equipo'],
+      cons: ['Contactos disponibles mayoritariamente genéricos', 'Navegación centrada en consultas transaccionales', 'Poca orientación a flujos comerciales de exportación']
+    },
+    'tentdata': {
+      name: 'Tentdata',
+      pros: ['Cobertura robusta con customs, mirror y directories', 'Funcionalidad de contactos desarrollada'],
+      cons: ['Plataforma muy completa pero compleja para el día a día', 'Búsqueda tipo SQL con muchos filtros y fricción', 'Puede resultar abrumadora para equipos comerciales']
+    },
+    'trademo': {
+      name: 'Trademo',
+      pros: ['Apuesta tecnológica fuerte con capacidades AI', 'Módulo de contactos avanzado con varios proveedores'],
+      cons: ['Producto generalista para muchos perfiles (no solo export)', 'Flujos complejos para equipos comerciales no técnicos', 'Pricing variable según HS codes, histórico y descargas']
+    },
+    'panjiva': {
+      name: 'Panjiva',
+      pros: ['Alto volumen de datos', 'Identificación de compradores', 'Análisis de competencia parcial'],
+      cons: ['Sin UX pensada para exportadores', 'Sin flujos de búsqueda comercial', 'Cobertura de países limitada']
+    }
+  };
+
+  const compDataByLang = {
+    es: compData,
+    en: {
+      'descartes-datamyne': { name: 'Descartes Datamyne', pros: ['Broad customs and mirror data coverage', 'Strong for operations/logistics analysts'], cons: ['SQL/transaction-centric search', 'Complex pricing with extras and add-ons', 'Not designed for export manager navigation'] },
+      'pentatransactions': { name: 'PentaTransactions', pros: ['Worldwide customs and mirror coverage', 'Competitive entry pricing'], cons: ['No buyer contact data', 'No advanced alerts, lists, or saved workflows', 'Technical transaction-based search experience'] },
+      'tradeatlas': { name: 'TradeAtlas', pros: ['Global trade data coverage', 'AI package with recommendations'], cons: ['Mostly generic contacts', 'Limited visual navigation and dashboards', 'Heavy manual work to extract actionable insights'] },
+      'datasur': { name: 'Datasur', pros: ['Good fit for LATAM + USA focus', 'Accessible regional pricing plans'], cons: ['Limited geographic coverage vs xNova', 'No decision-maker contact data', 'High manual effort for search and analysis'] },
+      'exportgenius': { name: 'ExportGenius', pros: ['Broad transactional data sources', 'Flexible plans by coverage'], cons: ['Limited/uneven contact quality', 'Complex UI for daily commercial use', 'Focused on raw data over export workflows'] },
+      'globalwits': { name: 'Globalwits', pros: ['Very complete platform with large data volume', 'Advanced contacts and segmentation'], cons: ['High complexity for non-technical profiles', 'Steep learning curve to obtain value quickly', 'Not simplified for export manager usage'] },
+      'abrahams': { name: 'Abrahams', pros: ['Broad global trade and company base', 'Scalable plans by team size'], cons: ['Contacts are mostly generic', 'Navigation centered on transactional queries', 'Low fit for commercial export workflows'] },
+      'tentdata': { name: 'Tentdata', pros: ['Solid coverage with customs, mirror and directories', 'Developed contact functionality'], cons: ['Very complete but complex for day-to-day work', 'SQL-like search with many filters and friction', 'Can feel overwhelming for commercial teams'] },
+      'trademo': { name: 'Trademo', pros: ['Strong AI-driven technology approach', 'Advanced contact module with multiple providers'], cons: ['Generalist product for many profiles (not only export)', 'Complex workflows for non-technical teams', 'Variable pricing by HS codes, history, and downloads'] },
+      'panjiva': { name: 'Panjiva', pros: ['High data volume', 'Buyer identification', 'Partial competitive analysis'], cons: ['No exporter-focused UX', 'No commercial search workflows', 'Limited country coverage'] }
+    },
+    it: {
+      'descartes-datamyne': { name: 'Descartes Datamyne', pros: ['Copertura ampia di dati doganali e mirror', 'Forte per analisti operations/logistica'], cons: ['Ricerca centrata su SQL/transazioni', 'Pricing complesso con extra e add-on', 'Navigazione non pensata per export manager'] },
+      'pentatransactions': { name: 'PentaTransactions', pros: ['Copertura mondiale customs e mirror', 'Prezzo di ingresso competitivo'], cons: ['Nessun dato di contatto buyer', 'Niente alert avanzati, liste o salvataggi', 'Esperienza tecnica basata su transazioni'] },
+      'tradeatlas': { name: 'TradeAtlas', pros: ['Copertura globale dei dati commerciali', 'Pacchetto AI con raccomandazioni'], cons: ['Contatti per lo più generici', 'Navigazione visuale e dashboard limitate', 'Molto lavoro manuale per insight azionabili'] },
+      'datasur': { name: 'Datasur', pros: ['Buona opzione per focus LATAM + USA', 'Piani regionali accessibili'], cons: ['Copertura geografica limitata rispetto a xNova', 'Nessun contatto di decisori acquisti', 'Ricerca e analisi ad alto carico manuale'] },
+      'exportgenius': { name: 'ExportGenius', pros: ['Ampie fonti dati transazionali', 'Piani flessibili per copertura'], cons: ['Qualità contatti limitata/irregolare', 'Interfaccia complessa per uso commerciale', 'Orientata a dati grezzi più che ai flussi export'] },
+      'globalwits': { name: 'Globalwits', pros: ['Piattaforma molto completa con grande volume dati', 'Contatti e segmentazione avanzati'], cons: ['Alta complessità per profili non tecnici', 'Curva di apprendimento elevata', 'Poco semplificata per export manager'] },
+      'abrahams': { name: 'Abrahams', pros: ['Base globale ampia di commercio e aziende', 'Piani scalabili per dimensione team'], cons: ['Contatti prevalentemente generici', 'Navigazione centrata su query transazionali', 'Bassa aderenza ai flussi commerciali export'] },
+      'tentdata': { name: 'Tentdata', pros: ['Copertura solida con customs, mirror e directories', 'Funzionalità contatti sviluppata'], cons: ['Molto completa ma complessa nel quotidiano', 'Ricerca tipo SQL con molti filtri', 'Può risultare pesante per team commerciali'] },
+      'trademo': { name: 'Trademo', pros: ['Approccio tecnologico forte con AI', 'Modulo contatti avanzato con più provider'], cons: ['Prodotto generalista per molti profili', 'Flussi complessi per team non tecnici', 'Prezzi variabili per HS code, storico e download'] },
+      'panjiva': { name: 'Panjiva', pros: ['Alto volume di dati', 'Identificazione buyer', 'Analisi competitor parziale'], cons: ['UX non pensata per export', 'Nessun flusso di ricerca commerciale', 'Copertura paesi limitata'] }
+    }
+  };
+
+  const tableData = {
+    'descartes-datamyne': ['partial','check','cross','cross','partial','partial','partial','cross'],
+    'pentatransactions': ['partial','partial','cross','cross','partial','cross','cross','partial'],
+    'tradeatlas': ['partial','partial','cross','cross','cross','cross','cross','partial'],
+    'datasur': ['cross','cross','cross','cross','cross','cross','cross','partial'],
+    'exportgenius': ['partial','partial','cross','cross','cross','cross','cross','partial'],
+    'globalwits': ['partial','partial','cross','cross','partial','partial','cross','cross'],
+    'abrahams': ['partial','partial','cross','cross','partial','partial','cross','partial'],
+    'tentdata': ['partial','partial','cross','cross','partial','partial','cross','partial'],
+    'trademo': ['partial','partial','cross','cross','partial','partial','partial','cross'],
+    'panjiva': ['partial','check','cross','cross','partial','partial','partial','cross']
+  };
+  function fmtCell(v) {
+    const t = i18n[currentLang] || i18n.es;
+    if (v === 'check') return `<span class="check">${t.yesLabel}</span>`;
+    if (v === 'partial') return `<span class="partial">${t.partialLabel}</span>`;
+    return '<span class="cross">✕</span>';
+  }
+
+  const compScreenshots = {
+    'descartes-datamyne': 'Descartes.svg',
+    'pentatransactions': 'Penta_Transactions.svg',
+    'tradeatlas': 'Trade%20atlas.svg',
+    'datasur': 'Datasur.svg',
+    'exportgenius': 'Export%20genius.svg',
+    'globalwits': 'Global%20Wits.svg',
+    'abrahams': 'Abrahams.svg',
+    'tentdata': 'Tentdata.svg',
+    'trademo': 'Trademo.svg',
+    'panjiva': 'Panjiva.svg?v=20260326'
+  };
+
+  function selectCompetitor(key) {
+    const langData = compDataByLang[currentLang] || compDataByLang.es;
+    const d = langData[key] || compData[key];
+    if (!d) return;
+    const sliderSel = document.getElementById('sliderCompSelect');
+    const compareSel = document.getElementById('compareCompSelect');
+    const compImg = document.getElementById('sliderCompImg');
+    if (sliderSel) sliderSel.value = key;
+    if (compareSel) compareSel.value = key;
+    if (compImg) compImg.src = compScreenshots[key] || 'Descartes.svg';
+    const compNameEl = document.getElementById('comp-name');
+    if (compNameEl) compNameEl.textContent = d.name;
+    const list = document.getElementById('comp-list');
+    if (list) {
+      list.innerHTML = '';
+      d.pros.forEach(t => list.innerHTML += `<li class="positive"><span class="icon-check">✓</span> ${t}</li>`);
+      d.cons.forEach(t => list.innerHTML += `<li class="negative"><span class="icon-cross">✕</span> ${t}</li>`);
+    }
+    const thComp = document.getElementById('tableCompTh');
+    const tbody = document.getElementById('tableCompBody');
+    if (thComp) thComp.textContent = d.name;
+    const t = i18n[currentLang] || i18n.es;
+    if (tbody && tableData[key]) {
+      tbody.innerHTML = tableData[key].map((v, i) =>
+        `<tr><td>${t.tableLabels[i]}</td><td><span class="check">${t.yesLabel}</span></td><td>${fmtCell(v)}</td></tr>`
+      ).join('');
+    }
+  }
+
+  const compareSel = document.getElementById('compareCompSelect');
+  const sliderSel = document.getElementById('sliderCompSelect');
+  if (compareSel) compareSel.addEventListener('change', function() { selectCompetitor(this.value); });
+  if (sliderSel) sliderSel.addEventListener('change', function() { selectCompetitor(this.value); });
+  selectCompetitor(compareSel?.value || 'descartes-datamyne');
+
+  const fsBtn = document.getElementById('sliderFullscreenBtn');
+  const fsIcon = fsBtn?.querySelector('.material-icons-round');
+  const sliderEl = document.getElementById('sliderWrapper');
+  if (fsBtn && sliderEl) {
+    fsBtn.addEventListener('click', () => {
+      const isFs = document.fullscreenElement || document.webkitFullscreenElement;
+      if (!isFs) {
+        (sliderEl.requestFullscreen || sliderEl.webkitRequestFullscreen)?.call(sliderEl)?.then(() => {
+          if (fsIcon) fsIcon.textContent = 'fullscreen_exit';
+        }).catch(() => {});
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen)?.call(document)?.then(() => {
+          if (fsIcon) fsIcon.textContent = 'fullscreen';
+        }).catch(() => {});
+      }
+    });
+    const onFsChange = () => {
+      if (fsIcon) fsIcon.textContent = (document.fullscreenElement || document.webkitFullscreenElement) ? 'fullscreen_exit' : 'fullscreen';
+    };
+    document.addEventListener('fullscreenchange', onFsChange);
+    document.addEventListener('webkitfullscreenchange', onFsChange);
+  }
+
+  // Slider
+  const wrapper = document.getElementById('sliderWrapper');
+  const overlay  = document.getElementById('sliderOverlay');
+  const divider  = document.getElementById('sliderDivider');
+  const handle   = document.getElementById('sliderHandle');
+  let dragging   = false;
+
+  function setSlider(x) {
+    if (!wrapper || !overlay || !divider || !handle) return;
+    const rect = wrapper.getBoundingClientRect();
+    if (!rect.width) return;
+    let pct = Math.max(5, Math.min(95, ((x - rect.left) / rect.width) * 100));
+    overlay.style.clipPath = `inset(0 0 0 ${pct}%)`;
+    divider.style.left = handle.style.left = pct + '%';
+  }
+
+  if (handle) {
+    handle.addEventListener('mousedown', e => {
+      e.preventDefault();
+      dragging = true;
+      setSlider(e.clientX);
+    });
+    handle.addEventListener('touchstart', e => {
+      dragging = true; setSlider(e.touches[0].clientX);
+    }, { passive: true });
+  }
+  window.addEventListener('mousemove',   e => { if (dragging) setSlider(e.clientX); });
+  window.addEventListener('touchmove',   e => { if (dragging) setSlider(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('mouseup',    () => dragging = false);
+  window.addEventListener('touchend',   () => dragging = false);
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.feature-card, .why-item, .metric-block, .compare-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(14px)';
+    el.style.transition = 'opacity .4s ease, transform .4s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
