@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: competitors-deployment
+  namespace: xnova-core
+spec:
+  selector:
+    matchLabels:
+      app: competitors
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: competitors
+    spec:
+      nodeSelector:
+        cloud.google.com/compute-class: pool
+      imagePullSecrets:
+        - name: ecr-pull-secret
+      containers:
+        - name: competitors
+          image: DOCKER_IMAGE
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: competitors-service
+  namespace: xnova-core
+spec:
+  type: ClusterIP
+  selector:
+    app: competitors
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: competitors-route
+  namespace: xnova-core
+spec:
+  ingressClassName: apisix
+  http:
+    - name: competitors
+      match:
+        hosts:
+          - competitors.xnovainternational.com
+        paths:
+          - /*
+      backends:
+        - serviceName: competitors-service
+          servicePort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: competitors-ingress
+  namespace: apisix
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: xnovainternational.com-tls-secret
+      hosts:
+        - competitors.xnovainternational.com
+  rules:
+    - host: competitors.xnovainternational.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: apisix-gateway
+                port:
+                  number: 80
